@@ -1,0 +1,89 @@
+server:
+  port: 9502
+spring:
+  application:
+    name: clever-shopping
+    url: "http://127.0.0.1:9502"
+    client: "http://localhost:1000"
+    key: "92644664"
+    workerId: 1
+    datacenterId: 1
+    defaultOnlineUserId: 12
+  devtools:
+    restart:
+      enabled: true
+      additional-paths: src/main/java
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    druid:
+      # 主库数据源
+      master:
+        url: jdbc:mysql://db-mysql.iyanghong.cn:58826/shopping?serverTimezone=GMT%2B8&useSSL=false
+        username: root
+        password: Ts962464
+      # 初始连接数
+      initialSize: 5
+      # 最小连接池数量
+      minIdle: 10
+      # 最大连接池数量
+      maxActive: 20
+      # 配置获取连接等待超时的时间
+      maxWait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      minEvictableIdleTimeMillis: 300000
+      # 配置一个连接在池中最大生存的时间，单位是毫秒
+      maxEvictableIdleTimeMillis: 900000
+      # 配置检测连接是否有效
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      webStatFilter:
+        enabled: true
+      statViewServlet:
+        enabled: true
+        # 设置白名单，不填则允许所有访问
+        allow:
+        url-pattern: /druid/*
+        # 控制台管理用户名和密码
+        login-username: zzl
+        login-password: zzl
+      filter:
+        stat:
+          enabled: true
+          # 慢SQL记录
+          log-slow-sql: true
+          slow-sql-millis: 1000
+          merge-sql: true
+        wall:
+          config:
+            multi-statement-allow: true
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 2
+#线程池
+clever:
+  threadPool:
+    corePoolSize: 30
+    maxPoolSize: 200
+    queueCapacity: 10000
+    keepAliveSeconds: 300
+    prefix: SYSTEM-SERVICE
+
+mybatis-plus:
+  global-config:
+    db-config:
+      table-undcomerline: false
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath*:com/clever/mapper/*.xml
