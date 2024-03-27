@@ -37,32 +37,34 @@ public class ProductCategoryController {
      *
      * @param pageNumber 页码
      * @param pageSize   每页记录数
-     * @param name 商品分类名称
-     * @param parentId 父级分类id
+     * @param name       商品分类名称
+     * @param parentId   父级分类id
      * @return 当前页数据
      */
     @GetMapping("/page/{pageNumber}/{pageSize}")
     @Auth(value = "clever-shopping.productCategory.page", name = "商品分类分页", description = "商品分类分页接口")
-    public Result<Page<ProductCategory>> selectPage(@PathVariable("pageNumber") Integer pageNumber, @PathVariable("pageSize") Integer pageSize,String name,String parentId) {
+    public Result<Page<ProductCategory>> selectPage(@PathVariable("pageNumber") Integer pageNumber, @PathVariable("pageSize") Integer pageSize, String name, String parentId) {
         return new Result<>(productCategoryService.selectPage(pageNumber, pageSize, name, parentId), "分页数据查询成功");
     }
+
     /**
-    * 根据父级分类id获取列表
-    *
-    * @param parentId 父级分类id
-    * @return List<ProductCategory> 商品分类列表
-    */
+     * 根据父级分类id获取列表
+     *
+     * @param parentId 父级分类id
+     * @return List<ProductCategory> 商品分类列表
+     */
     @GetMapping("/listByParentId/{parentId}")
     @Auth(value = "clever-shopping.productCategory.listByParentId", name = "根据父级分类id获取商品分类列表", description = "根据父级分类id获取商品分类列表接口")
     public Result<List<ProductCategory>> selectListByParentId(@PathVariable("parentId") String parentId) {
         return new Result<>(productCategoryService.selectListByParentId(parentId), "查询成功");
     }
+
     /**
-    * 根据创建者id获取列表
-    *
-    * @param creator 创建者id
-    * @return List<ProductCategory> 商品分类列表
-    */
+     * 根据创建者id获取列表
+     *
+     * @param creator 创建者id
+     * @return List<ProductCategory> 商品分类列表
+     */
     @GetMapping("/listByCreator/{creator}")
     @Auth(value = "clever-shopping.productCategory.listByCreator", name = "根据创建者id获取商品分类列表", description = "根据创建者id获取商品分类列表接口")
     public Result<List<ProductCategory>> selectListByCreator(@PathVariable("creator") String creator) {
@@ -70,34 +72,36 @@ public class ProductCategoryController {
     }
 
     /**
-    * 根据商品分类id获取商品分类信息
-    *
-    * @param id 商品分类id
-    * @return 商品分类信息
-    */
+     * 根据商品分类id获取商品分类信息
+     *
+     * @param id 商品分类id
+     * @return 商品分类信息
+     */
     @GetMapping("/{id}")
     @Auth(value = "clever-system.productCategory.selectById", name = "根据商品分类id获取商品分类信息", description = "根据商品分类id获取商品分类信息接口")
     public Result<ProductCategory> selectById(@PathVariable("id") String id) {
-    return new Result<>(productCategoryService.selectById(id), "查询成功");
+        return new Result<>(productCategoryService.selectById(id), "查询成功");
     }
+
     /**
-    * 创建商品分类信息
-    *
-    * @param productCategory 商品分类实体信息
-    * @return 创建后的商品分类信息
-    */
+     * 创建商品分类信息
+     *
+     * @param productCategory 商品分类实体信息
+     * @return 创建后的商品分类信息
+     */
     @PostMapping("")
     @Auth(value = "clever-shopping.productCategory.create", name = "创建商品分类", description = "创建商品分类信息接口")
     public Result<ProductCategory> create(@Validated ProductCategory productCategory) {
         OnlineUser onlineUser = SpringUtil.getOnlineUser();
         return new Result<>(productCategoryService.create(productCategory, onlineUser), "创建成功");
     }
+
     /**
-    * 修改商品分类信息
-    *
-    * @param productCategory 商品分类实体信息
-    * @return 修改后的商品分类信息
-    */
+     * 修改商品分类信息
+     *
+     * @param productCategory 商品分类实体信息
+     * @return 修改后的商品分类信息
+     */
     @PatchMapping("/{id}")
     @Auth(value = "clever-shopping.productCategory.update", name = "修改商品分类", description = "修改商品分类信息接口")
     public Result<ProductCategory> update(@Validated ProductCategory productCategory, @PathVariable("id") String id) {

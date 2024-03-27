@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -13,7 +14,7 @@ import java.util.Date;
  * 好友申请
  *
  * @Author xixi
- * @Date 2024-03-26 17:10:17
+ * @Date 2024-03-27 17:36:54
  */
 public class FriendRequest implements Serializable {
 
@@ -33,9 +34,13 @@ public class FriendRequest implements Serializable {
     @NotBlank(message = "好友id不能为空")
     private String friendId;
     /**
-     * 好友申请状态 0:未处理 1:已同意 2:已拒绝
+     * 好友申请消息
      */
-    @NotNull(message = "好友申请状态 0不能为空")
+    private String message;
+    /**
+     * 好友申请状态:0-未处理,1-已同意,2-已拒绝
+     */
+    @NotNull(message = "好友申请状态不能为空")
     private Integer status;
     /**
      * 创建时间
@@ -45,7 +50,6 @@ public class FriendRequest implements Serializable {
      * 修改时间
      */
     private Date updatedAt;
-
 
 
     /**
@@ -58,6 +62,7 @@ public class FriendRequest implements Serializable {
     public void setId(String id) {
         this.id = id;
     }
+
     /**
      * 用户id
      */
@@ -68,6 +73,7 @@ public class FriendRequest implements Serializable {
     public void setUserId(String userId) {
         this.userId = userId;
     }
+
     /**
      * 好友id
      */
@@ -78,8 +84,20 @@ public class FriendRequest implements Serializable {
     public void setFriendId(String friendId) {
         this.friendId = friendId;
     }
+
     /**
-     * 好友申请状态 0:未处理 1:已同意 2:已拒绝
+     * 好友申请消息
+     */
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    /**
+     * 好友申请状态:0-未处理,1-已同意,2-已拒绝
      */
     public Integer getStatus() {
         return status;
@@ -88,6 +106,7 @@ public class FriendRequest implements Serializable {
     public void setStatus(Integer status) {
         this.status = status;
     }
+
     /**
      * 创建时间
      */
@@ -98,6 +117,7 @@ public class FriendRequest implements Serializable {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
+
     /**
      * 修改时间
      */

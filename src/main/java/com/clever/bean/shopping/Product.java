@@ -6,15 +6,18 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.FieldFill;
+
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import java.util.Date;
+import java.math.BigDecimal;
 
 /**
  * 商品
  *
  * @Author xixi
- * @Date 2024-03-26 17:10:17
+ * @Date 2024-03-27 11:46:50
  */
 public class Product implements Serializable {
 
@@ -35,12 +38,24 @@ public class Product implements Serializable {
     /**
      * 商品价格
      */
-    @NotBlank(message = "商品价格不能为空")
-    private String price;
+    @NotNull(message = "商品价格不能为空")
+    private BigDecimal price;
     /**
      * 商品图片地址
      */
     private String imgUrl;
+    /**
+     * 商品规格
+     */
+    private String specification;
+    /**
+     * 商品库存
+     */
+    private Integer stock;
+    /**
+     * 商品状态:0-下架,1-上架
+     */
+    private Integer status;
     /**
      * 商品分类id
      */
@@ -61,7 +76,6 @@ public class Product implements Serializable {
     private Date updatedAt;
 
 
-
     /**
      * 商品id
      */
@@ -72,6 +86,7 @@ public class Product implements Serializable {
     public void setId(String id) {
         this.id = id;
     }
+
     /**
      * 商品名称
      */
@@ -82,6 +97,7 @@ public class Product implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
     /**
      * 商品描述
      */
@@ -92,16 +108,18 @@ public class Product implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
+
     /**
      * 商品价格
      */
-    public String getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
+
     /**
      * 商品图片地址
      */
@@ -112,6 +130,40 @@ public class Product implements Serializable {
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
     }
+
+    /**
+     * 商品规格
+     */
+    public String getSpecification() {
+        return specification;
+    }
+
+    public void setSpecification(String specification) {
+        this.specification = specification;
+    }
+
+    /**
+     * 商品库存
+     */
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
+    }
+
+    /**
+     * 商品状态:0-下架,1-上架
+     */
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     /**
      * 商品分类id
      */
@@ -122,6 +174,7 @@ public class Product implements Serializable {
     public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
     }
+
     /**
      * 创建者id
      */
@@ -132,6 +185,7 @@ public class Product implements Serializable {
     public void setCreator(String creator) {
         this.creator = creator;
     }
+
     /**
      * 创建时间
      */
@@ -142,6 +196,7 @@ public class Product implements Serializable {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
+
     /**
      * 修改时间
      */

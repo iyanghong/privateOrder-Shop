@@ -6,11 +6,11 @@ import com.clever.bean.shopping.OrderProduct;
 
 
 /**
-* 订单商品Mapper
-*
-* @Author xixi
-* @Date 2024-03-26 17:10:18
-*/
+ * 订单商品Mapper
+ *
+ * @Author xixi
+ * @Date 2024-03-27 11:46:50
+ */
 @Mapper
 public interface OrderProductMapper extends BaseMapper<OrderProduct> {
 

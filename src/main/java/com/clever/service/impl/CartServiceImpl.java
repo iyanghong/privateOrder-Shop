@@ -3,11 +3,13 @@ package com.clever.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.clever.bean.model.OnlineUser;
+import com.clever.bean.shopping.projo.output.CartProductDetailOutput;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.clever.mapper.CartMapper;
@@ -20,7 +22,7 @@ import javax.annotation.Resource;
  * 购物车服务
  *
  * @Author xixi
- * @Date 2024-03-26 17:10:18
+ * @Date 2024-03-27 11:46:50
  */
 @Service
 public class CartServiceImpl implements CartService {
@@ -35,12 +37,12 @@ public class CartServiceImpl implements CartService {
      *
      * @param pageNumber 页码
      * @param pageSize   每页记录数
-     * @param userId 用户id
-     * @param productId 商品id
+     * @param userId     用户id
+     * @param productId  商品id
      * @return Page<Cart>
      */
     @Override
-    public Page<Cart> selectPage(Integer pageNumber, Integer pageSize,String userId,String productId) {
+    public Page<Cart> selectPage(Integer pageNumber, Integer pageSize, String userId, String productId) {
         QueryWrapper<Cart> queryWrapper = new QueryWrapper<>();
         if (StringUtils.isNotBlank(userId)) {
             queryWrapper.eq("user_id", userId);
@@ -50,6 +52,7 @@ public class CartServiceImpl implements CartService {
         }
         return cartMapper.selectPage(new Page<Cart>(pageNumber, pageSize), queryWrapper);
     }
+
     /**
      * 根据购物车id获取购物车
      *
@@ -60,6 +63,7 @@ public class CartServiceImpl implements CartService {
     public Cart selectById(String id) {
         return cartMapper.selectById(id);
     }
+
     /**
      * 根据用户id获取列表
      *
@@ -70,6 +74,7 @@ public class CartServiceImpl implements CartService {
     public List<Cart> selectListByUserId(String userId) {
         return cartMapper.selectList(new QueryWrapper<Cart>().eq("user_id", userId).orderByAsc("id"));
     }
+
     /**
      * 根据商品id获取列表
      *
@@ -80,13 +85,14 @@ public class CartServiceImpl implements CartService {
     public List<Cart> selectListByProductId(String productId) {
         return cartMapper.selectList(new QueryWrapper<Cart>().eq("product_id", productId).orderByAsc("id"));
     }
+
     /**
-    * 新建购物车
-    *
-    * @param cart 购物车实体信息
-    * @param onlineUser   当前登录用户
-    * @return Cart 新建后的购物车信息
-    */
+     * 新建购物车
+     *
+     * @param cart       购物车实体信息
+     * @param onlineUser 当前登录用户
+     * @return Cart 新建后的购物车信息
+     */
     @Override
     public Cart create(Cart cart, OnlineUser onlineUser) {
         cartMapper.insert(cart);
@@ -95,12 +101,12 @@ public class CartServiceImpl implements CartService {
     }
 
     /**
-    * 修改购物车
-    *
-    * @param cart 购物车实体信息
-    * @param onlineUser   当前登录用户
-    * @return Cart 修改后的购物车信息
-    */
+     * 修改购物车
+     *
+     * @param cart       购物车实体信息
+     * @param onlineUser 当前登录用户
+     * @return Cart 修改后的购物车信息
+     */
     @Override
     public Cart update(Cart cart, OnlineUser onlineUser) {
         cartMapper.updateById(cart);
@@ -109,16 +115,16 @@ public class CartServiceImpl implements CartService {
     }
 
     /**
-    * 保存购物车
-    *
-    * @param cart 购物车实体信息
-    * @param onlineUser 当前登录用户
-    * @return Cart 保存后的购物车信息
-    */
+     * 保存购物车
+     *
+     * @param cart       购物车实体信息
+     * @param onlineUser 当前登录用户
+     * @return Cart 保存后的购物车信息
+     */
     @Override
     public Cart save(Cart cart, OnlineUser onlineUser) {
         if (StringUtils.isNotBlank(cart.getId())) {
-           return create(cart, onlineUser);
+            return create(cart, onlineUser);
         }
         return update(cart, onlineUser);
     }
@@ -126,7 +132,7 @@ public class CartServiceImpl implements CartService {
     /**
      * 根据购物车id删除购物车信息
      *
-     * @param id 购物车id
+     * @param id         购物车id
      * @param onlineUser 当前登录用户
      */
     @Override
@@ -146,10 +152,11 @@ public class CartServiceImpl implements CartService {
         cartMapper.deleteBatchIds(ids);
         log.info("购物车, 购物车信息批量删除成功: userId={}, count={}, cartIds={}", onlineUser.getId(), ids.size(), ids.toString());
     }
+
     /**
      * 根据用户id删除
      *
-     * @param userId 用户id
+     * @param userId     用户id
      * @param onlineUser 当前登录用户
      */
     @Override
@@ -157,15 +164,29 @@ public class CartServiceImpl implements CartService {
         cartMapper.delete(new QueryWrapper<Cart>().eq("user_id", userId));
         log.info("购物车, 购物车信息根据userId删除成功: userId={}, userId={}", onlineUser.getId(), userId);
     }
+
     /**
      * 根据商品id删除
      *
-     * @param productId 商品id
+     * @param productId  商品id
      * @param onlineUser 当前登录用户
      */
     @Override
     public void deleteByProductId(String productId, OnlineUser onlineUser) {
         cartMapper.delete(new QueryWrapper<Cart>().eq("product_id", productId));
         log.info("购物车, 购物车信息根据productId删除成功: userId={}, productId={}", onlineUser.getId(), productId);
+    }
+
+    @Override
+    public List<CartProductDetailOutput> selectCartProductDetailByUserId(String userId) {
+        return cartMapper.selectCartProductDetailByUserId(userId);
+    }
+
+    @Override
+    public List<CartProductDetailOutput> selectCartProductDetailByCartIds(List<String> ids) {
+        if (ids == null || ids.isEmpty()) {
+            return new ArrayList<>();
+        }
+        return cartMapper.selectCartProductDetailByCartIds(ids);
     }
 }

@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 
 /**
  * 常用类配置
+ *
  * @Author xixi
  * @Date 2023-12-26 15:16
  **/

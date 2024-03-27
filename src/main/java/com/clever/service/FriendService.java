@@ -6,12 +6,13 @@ import com.clever.bean.model.OnlineUser;
 import java.util.List;
 
 import com.clever.bean.shopping.Friend;
+import com.clever.bean.shopping.projo.output.FriendDetailOutput;
 
 /**
  * 好友服务接口
  *
  * @Author xixi
- * @Date 2024-03-26 17:10:18
+ * @Date 2024-03-27 17:36:54
  */
 public interface FriendService {
 
@@ -20,11 +21,11 @@ public interface FriendService {
      *
      * @param pageNumber 页码
      * @param pageSize   每页记录数
-     * @param userId 用户id
-     * @param friendId 好友id
+     * @param userId     用户id
+     * @param friendId   好友id
      * @return Page<Friend>
      */
-    Page<Friend> selectPage(Integer pageNumber, Integer pageSize,String userId,String friendId);
+    Page<Friend> selectPage(Integer pageNumber, Integer pageSize, String userId, String friendId);
 
     /**
      * 根据好友id获取好友
@@ -40,7 +41,7 @@ public interface FriendService {
      * @param userId 用户id
      * @return List<Friend> 好友列表
      */
-    List<Friend> selectListByUserId(String userId);
+    List<FriendDetailOutput> selectMyFriend(String userId);
 
     /**
      * 根据好友id获取列表
@@ -53,34 +54,34 @@ public interface FriendService {
     /**
      * 新建好友
      *
-     * @param friend 好友实体信息
-     * @param onlineUser   当前登录用户
+     * @param friend     好友实体信息
+     * @param onlineUser 当前登录用户
      * @return Friend 新建后的好友信息
      */
     Friend create(Friend friend, OnlineUser onlineUser);
 
     /**
-    * 修改好友
-    *
-    * @param friend 好友实体信息
-    * @param onlineUser   当前登录用户
-    * @return Friend 修改后的好友信息
-    */
+     * 修改好友
+     *
+     * @param friend     好友实体信息
+     * @param onlineUser 当前登录用户
+     * @return Friend 修改后的好友信息
+     */
     Friend update(Friend friend, OnlineUser onlineUser);
 
     /**
-    * 保存好友
-    *
-    * @param friend 好友实体信息
-    * @param onlineUser 当前登录用户
-    * @return Friend 保存后的好友信息
-    */
+     * 保存好友
+     *
+     * @param friend     好友实体信息
+     * @param onlineUser 当前登录用户
+     * @return Friend 保存后的好友信息
+     */
     Friend save(Friend friend, OnlineUser onlineUser);
 
     /**
      * 根据好友id删除信息
      *
-     * @param id 好友id
+     * @param id         好友id
      * @param onlineUser 当前登录用户
      */
     void delete(String id, OnlineUser onlineUser);
@@ -92,17 +93,19 @@ public interface FriendService {
      * @param onlineUser 当前登录用户
      */
     void deleteBatchIds(List<String> ids, OnlineUser onlineUser);
+
     /**
      * 根据用户id删除
      *
-     * @param userId 用户id
+     * @param userId     用户id
      * @param onlineUser 当前登录用户
      */
     void deleteByUserId(String userId, OnlineUser onlineUser);
+
     /**
      * 根据好友id删除
      *
-     * @param friendId 好友id
+     * @param friendId   好友id
      * @param onlineUser 当前登录用户
      */
     void deleteByFriendId(String friendId, OnlineUser onlineUser);

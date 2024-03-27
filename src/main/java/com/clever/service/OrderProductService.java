@@ -11,7 +11,7 @@ import com.clever.bean.shopping.OrderProduct;
  * 订单商品服务接口
  *
  * @Author xixi
- * @Date 2024-03-26 17:10:18
+ * @Date 2024-03-27 11:46:50
  */
 public interface OrderProductService {
 
@@ -20,11 +20,11 @@ public interface OrderProductService {
      *
      * @param pageNumber 页码
      * @param pageSize   每页记录数
-     * @param orderId 订单id
-     * @param productId 商品id
+     * @param orderId    订单id
+     * @param productId  商品id
      * @return Page<OrderProduct>
      */
-    Page<OrderProduct> selectPage(Integer pageNumber, Integer pageSize,String orderId,String productId);
+    Page<OrderProduct> selectPage(Integer pageNumber, Integer pageSize, String orderId, String productId);
 
     /**
      * 根据订单商品id获取订单商品
@@ -41,6 +41,14 @@ public interface OrderProductService {
      * @return List<OrderProduct> 订单商品列表
      */
     List<OrderProduct> selectListByOrderId(String orderId);
+
+    /**
+     * 根据订单id列表获取列表
+     *
+     * @param orderIds 订单id列表
+     * @return List<OrderProduct> 订单商品列表
+     */
+    List<OrderProduct> selectListByOrderIds(List<String> orderIds);
 
     /**
      * 根据商品id获取列表
@@ -60,27 +68,27 @@ public interface OrderProductService {
     OrderProduct create(OrderProduct orderProduct, OnlineUser onlineUser);
 
     /**
-    * 修改订单商品
-    *
-    * @param orderProduct 订单商品实体信息
-    * @param onlineUser   当前登录用户
-    * @return OrderProduct 修改后的订单商品信息
-    */
+     * 修改订单商品
+     *
+     * @param orderProduct 订单商品实体信息
+     * @param onlineUser   当前登录用户
+     * @return OrderProduct 修改后的订单商品信息
+     */
     OrderProduct update(OrderProduct orderProduct, OnlineUser onlineUser);
 
     /**
-    * 保存订单商品
-    *
-    * @param orderProduct 订单商品实体信息
-    * @param onlineUser 当前登录用户
-    * @return OrderProduct 保存后的订单商品信息
-    */
+     * 保存订单商品
+     *
+     * @param orderProduct 订单商品实体信息
+     * @param onlineUser   当前登录用户
+     * @return OrderProduct 保存后的订单商品信息
+     */
     OrderProduct save(OrderProduct orderProduct, OnlineUser onlineUser);
 
     /**
      * 根据订单商品id删除信息
      *
-     * @param id 订单商品id
+     * @param id         订单商品id
      * @param onlineUser 当前登录用户
      */
     void delete(String id, OnlineUser onlineUser);
@@ -92,17 +100,19 @@ public interface OrderProductService {
      * @param onlineUser 当前登录用户
      */
     void deleteBatchIds(List<String> ids, OnlineUser onlineUser);
+
     /**
      * 根据订单id删除
      *
-     * @param orderId 订单id
+     * @param orderId    订单id
      * @param onlineUser 当前登录用户
      */
     void deleteByOrderId(String orderId, OnlineUser onlineUser);
+
     /**
      * 根据商品id删除
      *
-     * @param productId 商品id
+     * @param productId  商品id
      * @param onlineUser 当前登录用户
      */
     void deleteByProductId(String productId, OnlineUser onlineUser);

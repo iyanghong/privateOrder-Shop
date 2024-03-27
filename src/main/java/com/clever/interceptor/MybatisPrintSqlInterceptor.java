@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * mybatis完整sql日志打印
+ *
  * @Author xixi
  * @Date 2023-12-27 08:45
  **/
@@ -25,7 +26,7 @@ import org.slf4j.LoggerFactory;
         @Signature(type = Executor.class, method = "query", args = {MappedStatement.class, Object.class, RowBounds.class,
                 ResultHandler.class})
 })
-public class MybatisPrintSqlInterceptor implements Interceptor{
+public class MybatisPrintSqlInterceptor implements Interceptor {
 
     private final static Logger log = LoggerFactory.getLogger(MybatisPrintSqlInterceptor.class);
 

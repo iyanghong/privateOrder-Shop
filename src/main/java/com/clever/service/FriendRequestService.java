@@ -11,7 +11,7 @@ import com.clever.bean.shopping.FriendRequest;
  * 好友申请服务接口
  *
  * @Author xixi
- * @Date 2024-03-26 17:10:18
+ * @Date 2024-03-27 17:36:54
  */
 public interface FriendRequestService {
 
@@ -20,12 +20,12 @@ public interface FriendRequestService {
      *
      * @param pageNumber 页码
      * @param pageSize   每页记录数
-     * @param userId 用户id
-     * @param friendId 好友id
-     * @param status 好友申请状态 0:未处理 1:已同意 2:已拒绝
+     * @param userId     用户id
+     * @param friendId   好友id
+     * @param status     好友申请状态:0-未处理,1-已同意,2-已拒绝
      * @return Page<FriendRequest>
      */
-    Page<FriendRequest> selectPage(Integer pageNumber, Integer pageSize,String userId,String friendId,Integer status);
+    Page<FriendRequest> selectPage(Integer pageNumber, Integer pageSize, String userId, String friendId, Integer status);
 
     /**
      * 根据好友申请id获取好友申请
@@ -55,33 +55,33 @@ public interface FriendRequestService {
      * 新建好友申请
      *
      * @param friendRequest 好友申请实体信息
-     * @param onlineUser   当前登录用户
+     * @param onlineUser    当前登录用户
      * @return FriendRequest 新建后的好友申请信息
      */
     FriendRequest create(FriendRequest friendRequest, OnlineUser onlineUser);
 
     /**
-    * 修改好友申请
-    *
-    * @param friendRequest 好友申请实体信息
-    * @param onlineUser   当前登录用户
-    * @return FriendRequest 修改后的好友申请信息
-    */
+     * 修改好友申请
+     *
+     * @param friendRequest 好友申请实体信息
+     * @param onlineUser    当前登录用户
+     * @return FriendRequest 修改后的好友申请信息
+     */
     FriendRequest update(FriendRequest friendRequest, OnlineUser onlineUser);
 
     /**
-    * 保存好友申请
-    *
-    * @param friendRequest 好友申请实体信息
-    * @param onlineUser 当前登录用户
-    * @return FriendRequest 保存后的好友申请信息
-    */
+     * 保存好友申请
+     *
+     * @param friendRequest 好友申请实体信息
+     * @param onlineUser    当前登录用户
+     * @return FriendRequest 保存后的好友申请信息
+     */
     FriendRequest save(FriendRequest friendRequest, OnlineUser onlineUser);
 
     /**
      * 根据好友申请id删除信息
      *
-     * @param id 好友申请id
+     * @param id         好友申请id
      * @param onlineUser 当前登录用户
      */
     void delete(String id, OnlineUser onlineUser);
@@ -93,17 +93,19 @@ public interface FriendRequestService {
      * @param onlineUser 当前登录用户
      */
     void deleteBatchIds(List<String> ids, OnlineUser onlineUser);
+
     /**
      * 根据用户id删除
      *
-     * @param userId 用户id
+     * @param userId     用户id
      * @param onlineUser 当前登录用户
      */
     void deleteByUserId(String userId, OnlineUser onlineUser);
+
     /**
      * 根据好友id删除
      *
-     * @param friendId 好友id
+     * @param friendId   好友id
      * @param onlineUser 当前登录用户
      */
     void deleteByFriendId(String friendId, OnlineUser onlineUser);

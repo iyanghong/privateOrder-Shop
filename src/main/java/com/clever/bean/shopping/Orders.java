@@ -4,9 +4,11 @@ import java.io.Serializable;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -35,11 +37,11 @@ public class Orders implements Serializable {
      * 订单总价
      */
     @NotBlank(message = "订单总价不能为空")
-    private String totalPrice;
+    private BigDecimal totalPrice;
     /**
-     * 订单状态 0:未支付 1:已支付 2:已发货 3:已收货 4:已评价 5:已取消
+     * 订单状态 0:未支付 1:已支付 2:已发货 3:已收货 4:已取消
      */
-    @NotNull(message = "订单状态 0不能为空")
+    @NotNull(message = "订单状态")
     private Integer status;
     /**
      * 创建时间
@@ -49,7 +51,6 @@ public class Orders implements Serializable {
      * 修改时间
      */
     private Date updatedAt;
-
 
 
     /**
@@ -62,6 +63,7 @@ public class Orders implements Serializable {
     public void setId(String id) {
         this.id = id;
     }
+
     /**
      * 用户id
      */
@@ -72,6 +74,7 @@ public class Orders implements Serializable {
     public void setUserId(String userId) {
         this.userId = userId;
     }
+
     /**
      * 收货地址id
      */
@@ -82,16 +85,18 @@ public class Orders implements Serializable {
     public void setAddress(String address) {
         this.address = address;
     }
+
     /**
      * 订单总价
      */
-    public String getTotalPrice() {
+    public BigDecimal getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(String totalPrice) {
+    public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
     }
+
     /**
      * 订单状态 0:未支付 1:已支付 2:已发货 3:已收货 4:已评价 5:已取消
      */
@@ -102,6 +107,7 @@ public class Orders implements Serializable {
     public void setStatus(Integer status) {
         this.status = status;
     }
+
     /**
      * 创建时间
      */
@@ -112,6 +118,7 @@ public class Orders implements Serializable {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
+
     /**
      * 修改时间
      */

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -13,7 +14,7 @@ import java.util.Date;
  * 收货地址
  *
  * @Author xixi
- * @Date 2024-03-26 17:10:17
+ * @Date 2024-03-27 11:46:50
  */
 public class Addresses implements Serializable {
 
@@ -47,9 +48,9 @@ public class Addresses implements Serializable {
      */
     private String addressDetail;
     /**
-     * 是否默认地址 0:否 1:是
+     * 是否默认地址:0-否,1-是
      */
-    @NotNull(message = "是否默认地址 0不能为空")
+    @NotNull(message = "是否默认地址不能为空")
     private Integer isDefault;
     /**
      * 创建时间
@@ -59,7 +60,6 @@ public class Addresses implements Serializable {
      * 修改时间
      */
     private Date updatedAt;
-
 
 
     /**
@@ -72,6 +72,7 @@ public class Addresses implements Serializable {
     public void setId(String id) {
         this.id = id;
     }
+
     /**
      * 用户id
      */
@@ -82,6 +83,7 @@ public class Addresses implements Serializable {
     public void setUserId(String userId) {
         this.userId = userId;
     }
+
     /**
      * 收货人姓名
      */
@@ -92,6 +94,7 @@ public class Addresses implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
     /**
      * 收货人电话
      */
@@ -102,6 +105,7 @@ public class Addresses implements Serializable {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
     /**
      * 收货地址
      */
@@ -112,6 +116,7 @@ public class Addresses implements Serializable {
     public void setAddress(String address) {
         this.address = address;
     }
+
     /**
      * 详细地址
      */
@@ -122,8 +127,9 @@ public class Addresses implements Serializable {
     public void setAddressDetail(String addressDetail) {
         this.addressDetail = addressDetail;
     }
+
     /**
-     * 是否默认地址 0:否 1:是
+     * 是否默认地址:0-否,1-是
      */
     public Integer getIsDefault() {
         return isDefault;
@@ -132,6 +138,7 @@ public class Addresses implements Serializable {
     public void setIsDefault(Integer isDefault) {
         this.isDefault = isDefault;
     }
+
     /**
      * 创建时间
      */
@@ -142,6 +149,7 @@ public class Addresses implements Serializable {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
+
     /**
      * 修改时间
      */

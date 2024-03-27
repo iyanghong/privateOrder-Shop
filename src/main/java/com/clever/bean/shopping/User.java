@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.clever.bean.shopping.input.UserRegisterInput;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -83,7 +82,6 @@ public class User implements Serializable {
     private Date updatedAt;
 
 
-
     /**
      * 用户id
      */
@@ -94,6 +92,7 @@ public class User implements Serializable {
     public void setId(String id) {
         this.id = id;
     }
+
     /**
      * 用户名
      */
@@ -104,6 +103,7 @@ public class User implements Serializable {
     public void setUsername(String username) {
         this.username = username;
     }
+
     /**
      * 密码
      */
@@ -114,6 +114,7 @@ public class User implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+
     /**
      * 昵称
      */
@@ -124,6 +125,7 @@ public class User implements Serializable {
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
+
     /**
      * 性别:0-未知,1-男,2-女
      */
@@ -134,6 +136,7 @@ public class User implements Serializable {
     public void setGender(Integer gender) {
         this.gender = gender;
     }
+
     /**
      * 头像
      */
@@ -144,6 +147,7 @@ public class User implements Serializable {
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
+
     /**
      * 用户类型 0:普通用户 1:商家
      */
@@ -154,6 +158,7 @@ public class User implements Serializable {
     public void setType(Integer type) {
         this.type = type;
     }
+
     /**
      * 手机号
      */
@@ -164,6 +169,7 @@ public class User implements Serializable {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
     /**
      * 邮箱
      */
@@ -174,6 +180,7 @@ public class User implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
+
     /**
      * 余额
      */
@@ -184,6 +191,7 @@ public class User implements Serializable {
     public void setMoney(BigDecimal money) {
         this.money = money;
     }
+
     /**
      * 登录ip
      */
@@ -194,6 +202,7 @@ public class User implements Serializable {
     public void setLoginIp(String loginIp) {
         this.loginIp = loginIp;
     }
+
     /**
      * 最后登陆时间
      */
@@ -204,6 +213,7 @@ public class User implements Serializable {
     public void setLastLoginTime(Date lastLoginTime) {
         this.lastLoginTime = lastLoginTime;
     }
+
     /**
      * 创建时间
      */
@@ -214,6 +224,7 @@ public class User implements Serializable {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
+
     /**
      * 修改时间
      */

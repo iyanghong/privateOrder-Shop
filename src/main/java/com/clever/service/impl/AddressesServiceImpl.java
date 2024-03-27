@@ -20,7 +20,7 @@ import javax.annotation.Resource;
  * 收货地址服务
  *
  * @Author xixi
- * @Date 2024-03-26 17:10:18
+ * @Date 2024-03-27 11:46:50
  */
 @Service
 public class AddressesServiceImpl implements AddressesService {
@@ -35,13 +35,13 @@ public class AddressesServiceImpl implements AddressesService {
      *
      * @param pageNumber 页码
      * @param pageSize   每页记录数
-     * @param userId 用户id
-     * @param name 收货人姓名
-     * @param phone 收货人电话
+     * @param userId     用户id
+     * @param name       收货人姓名
+     * @param phone      收货人电话
      * @return Page<Addresses>
      */
     @Override
-    public Page<Addresses> selectPage(Integer pageNumber, Integer pageSize,String userId,String name,String phone) {
+    public Page<Addresses> selectPage(Integer pageNumber, Integer pageSize, String userId, String name, String phone) {
         QueryWrapper<Addresses> queryWrapper = new QueryWrapper<>();
         if (StringUtils.isNotBlank(userId)) {
             queryWrapper.eq("user_id", userId);
@@ -54,6 +54,7 @@ public class AddressesServiceImpl implements AddressesService {
         }
         return addressesMapper.selectPage(new Page<Addresses>(pageNumber, pageSize), queryWrapper);
     }
+
     /**
      * 根据收货地址id获取收货地址
      *
@@ -64,6 +65,7 @@ public class AddressesServiceImpl implements AddressesService {
     public Addresses selectById(String id) {
         return addressesMapper.selectById(id);
     }
+
     /**
      * 根据用户id获取列表
      *
@@ -74,13 +76,14 @@ public class AddressesServiceImpl implements AddressesService {
     public List<Addresses> selectListByUserId(String userId) {
         return addressesMapper.selectList(new QueryWrapper<Addresses>().eq("user_id", userId).orderByAsc("id"));
     }
+
     /**
-    * 新建收货地址
-    *
-    * @param addresses 收货地址实体信息
-    * @param onlineUser   当前登录用户
-    * @return Addresses 新建后的收货地址信息
-    */
+     * 新建收货地址
+     *
+     * @param addresses  收货地址实体信息
+     * @param onlineUser 当前登录用户
+     * @return Addresses 新建后的收货地址信息
+     */
     @Override
     public Addresses create(Addresses addresses, OnlineUser onlineUser) {
         addressesMapper.insert(addresses);
@@ -89,12 +92,12 @@ public class AddressesServiceImpl implements AddressesService {
     }
 
     /**
-    * 修改收货地址
-    *
-    * @param addresses 收货地址实体信息
-    * @param onlineUser   当前登录用户
-    * @return Addresses 修改后的收货地址信息
-    */
+     * 修改收货地址
+     *
+     * @param addresses  收货地址实体信息
+     * @param onlineUser 当前登录用户
+     * @return Addresses 修改后的收货地址信息
+     */
     @Override
     public Addresses update(Addresses addresses, OnlineUser onlineUser) {
         addressesMapper.updateById(addresses);
@@ -103,16 +106,16 @@ public class AddressesServiceImpl implements AddressesService {
     }
 
     /**
-    * 保存收货地址
-    *
-    * @param addresses 收货地址实体信息
-    * @param onlineUser 当前登录用户
-    * @return Addresses 保存后的收货地址信息
-    */
+     * 保存收货地址
+     *
+     * @param addresses  收货地址实体信息
+     * @param onlineUser 当前登录用户
+     * @return Addresses 保存后的收货地址信息
+     */
     @Override
     public Addresses save(Addresses addresses, OnlineUser onlineUser) {
         if (StringUtils.isNotBlank(addresses.getId())) {
-           return create(addresses, onlineUser);
+            return create(addresses, onlineUser);
         }
         return update(addresses, onlineUser);
     }
@@ -120,7 +123,7 @@ public class AddressesServiceImpl implements AddressesService {
     /**
      * 根据收货地址id删除收货地址信息
      *
-     * @param id 收货地址id
+     * @param id         收货地址id
      * @param onlineUser 当前登录用户
      */
     @Override
@@ -140,10 +143,11 @@ public class AddressesServiceImpl implements AddressesService {
         addressesMapper.deleteBatchIds(ids);
         log.info("收货地址, 收货地址信息批量删除成功: userId={}, count={}, addressesIds={}", onlineUser.getId(), ids.size(), ids.toString());
     }
+
     /**
      * 根据用户id删除
      *
-     * @param userId 用户id
+     * @param userId     用户id
      * @param onlineUser 当前登录用户
      */
     @Override

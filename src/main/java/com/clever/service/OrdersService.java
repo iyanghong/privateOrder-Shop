@@ -6,6 +6,7 @@ import com.clever.bean.model.OnlineUser;
 import java.util.List;
 
 import com.clever.bean.shopping.Orders;
+import com.clever.bean.shopping.projo.output.OrdersDetailOutput;
 
 /**
  * 订单服务接口
@@ -20,11 +21,11 @@ public interface OrdersService {
      *
      * @param pageNumber 页码
      * @param pageSize   每页记录数
-     * @param userId 用户id
-     * @param status 订单状态 0:未支付 1:已支付 2:已发货 3:已收货 4:已评价 5:已取消
+     * @param userId     用户id
+     * @param status     订单状态 0:未支付 1:已支付 2:已发货 3:已收货 4:已评价 5:已取消
      * @return Page<Orders>
      */
-    Page<Orders> selectPage(Integer pageNumber, Integer pageSize,String userId,Integer status);
+    Page<OrdersDetailOutput> selectPage(Integer pageNumber, Integer pageSize, String userId, Integer status);
 
     /**
      * 根据订单id获取订单
@@ -45,34 +46,34 @@ public interface OrdersService {
     /**
      * 新建订单
      *
-     * @param orders 订单实体信息
-     * @param onlineUser   当前登录用户
+     * @param cartIds    购物车列表
+     * @param onlineUser 当前登录用户
      * @return Orders 新建后的订单信息
      */
-    Orders create(Orders orders, OnlineUser onlineUser);
+    Orders create(List<String> cartIds, OnlineUser onlineUser);
 
     /**
-    * 修改订单
-    *
-    * @param orders 订单实体信息
-    * @param onlineUser   当前登录用户
-    * @return Orders 修改后的订单信息
-    */
+     * 修改订单
+     *
+     * @param orders     订单实体信息
+     * @param onlineUser 当前登录用户
+     * @return Orders 修改后的订单信息
+     */
     Orders update(Orders orders, OnlineUser onlineUser);
 
     /**
-    * 保存订单
-    *
-    * @param orders 订单实体信息
-    * @param onlineUser 当前登录用户
-    * @return Orders 保存后的订单信息
-    */
+     * 保存订单
+     *
+     * @param orders     订单实体信息
+     * @param onlineUser 当前登录用户
+     * @return Orders 保存后的订单信息
+     */
     Orders save(Orders orders, OnlineUser onlineUser);
 
     /**
      * 根据订单id删除信息
      *
-     * @param id 订单id
+     * @param id         订单id
      * @param onlineUser 当前登录用户
      */
     void delete(String id, OnlineUser onlineUser);
@@ -84,10 +85,11 @@ public interface OrdersService {
      * @param onlineUser 当前登录用户
      */
     void deleteBatchIds(List<String> ids, OnlineUser onlineUser);
+
     /**
      * 根据用户id删除
      *
-     * @param userId 用户id
+     * @param userId     用户id
      * @param onlineUser 当前登录用户
      */
     void deleteByUserId(String userId, OnlineUser onlineUser);

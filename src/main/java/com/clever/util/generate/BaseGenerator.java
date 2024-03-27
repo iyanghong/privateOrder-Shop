@@ -151,6 +151,12 @@ public class BaseGenerator implements IGenerator {
             return "String";
         } else if (columnType.equalsIgnoreCase("DATE") || columnType.equalsIgnoreCase("DATETIME")) {
             return "Date";
+        } else if (columnType.equalsIgnoreCase("decimal")) {
+            return "BigDecimal";
+        } else if (columnType.equalsIgnoreCase("float")) {
+            return "Float";
+        } else if (columnType.equalsIgnoreCase("double")) {
+            return "Double";
         } else {
             return "String";
         }
@@ -255,7 +261,7 @@ public class BaseGenerator implements IGenerator {
 
             Configuration configuration = new Configuration(Configuration.VERSION_2_3_32);
             // 指定模板文件所在的路径
-            configuration.setDirectoryForTemplateLoading(new File(Paths.get(projectRoot,  "src/main/resources/templates").toString()));
+            configuration.setDirectoryForTemplateLoading(new File(Paths.get(projectRoot, "src/main/resources/templates").toString()));
 
             // 设置模板文件使用的字符集
             configuration.setDefaultEncoding("utf-8");

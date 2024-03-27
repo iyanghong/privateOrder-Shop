@@ -6,11 +6,11 @@ import com.clever.bean.shopping.User;
 
 
 /**
-* 用户Mapper
-*
-* @Author xixi
-* @Date 2024-03-26 17:10:18
-*/
+ * 用户Mapper
+ *
+ * @Author xixi
+ * @Date 2024-03-26 17:10:18
+ */
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
 

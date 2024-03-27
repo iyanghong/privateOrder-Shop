@@ -59,6 +59,8 @@ public class FreeMaskerVariable {
         map.put("commentOrName", tableMeta.getCommentOrName());
         map.put("commentOrUpperCamelCaseName", tableMeta.getCommentOrUpperCamelCaseName());
         map.put("commentOrLowerCamelCaseName", tableMeta.getCommentOrLowerCamelCaseName());
+        map.put("isHasDecimalColumn", tableMeta.isHasDecimalColumn());
+
         boolean isHasAutoInsertColumn = false;
         boolean isHasAutoUpdateColumn = false;
         for (ColumnMeta columnMeta : tableMeta.getColumns()) {

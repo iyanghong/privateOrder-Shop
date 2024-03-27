@@ -37,17 +37,17 @@ public class UserController {
      *
      * @param pageNumber 页码
      * @param pageSize   每页记录数
-     * @param username 用户名
-     * @param nickname 昵称
-     * @param gender 性别:0-未知,1-男,2-女
-     * @param type 用户类型 0:普通用户 1:商家
-     * @param phone 手机号
-     * @param email 邮箱
+     * @param username   用户名
+     * @param nickname   昵称
+     * @param gender     性别:0-未知,1-男,2-女
+     * @param type       用户类型 0:普通用户 1:商家
+     * @param phone      手机号
+     * @param email      邮箱
      * @return 当前页数据
      */
     @GetMapping("/page/{pageNumber}/{pageSize}")
     @Auth(value = "clever-shopping.user.page", name = "用户分页", description = "用户分页接口")
-    public Result<Page<User>> selectPage(@PathVariable("pageNumber") Integer pageNumber, @PathVariable("pageSize") Integer pageSize,String username,String nickname,Integer gender,Integer type,String phone,String email) {
+    public Result<Page<User>> selectPage(@PathVariable("pageNumber") Integer pageNumber, @PathVariable("pageSize") Integer pageSize, String username, String nickname, Integer gender, Integer type, String phone, String email) {
         return new Result<>(userService.selectPage(pageNumber, pageSize, username, nickname, gender, type, phone, email), "分页数据查询成功");
     }
 
@@ -88,34 +88,36 @@ public class UserController {
     }
 
     /**
-    * 根据用户id获取用户信息
-    *
-    * @param id 用户id
-    * @return 用户信息
-    */
+     * 根据用户id获取用户信息
+     *
+     * @param id 用户id
+     * @return 用户信息
+     */
     @GetMapping("/{id}")
     @Auth(value = "clever-system.user.selectById", name = "根据用户id获取用户信息", description = "根据用户id获取用户信息接口")
     public Result<User> selectById(@PathVariable("id") String id) {
-    return new Result<>(userService.selectById(id), "查询成功");
+        return new Result<>(userService.selectById(id), "查询成功");
     }
+
     /**
-    * 创建用户信息
-    *
-    * @param user 用户实体信息
-    * @return 创建后的用户信息
-    */
+     * 创建用户信息
+     *
+     * @param user 用户实体信息
+     * @return 创建后的用户信息
+     */
     @PostMapping("")
     @Auth(value = "clever-shopping.user.create", name = "创建用户", description = "创建用户信息接口")
     public Result<User> create(@Validated User user) {
         OnlineUser onlineUser = SpringUtil.getOnlineUser();
         return new Result<>(userService.create(user, onlineUser), "创建成功");
     }
+
     /**
-    * 修改用户信息
-    *
-    * @param user 用户实体信息
-    * @return 修改后的用户信息
-    */
+     * 修改用户信息
+     *
+     * @param user 用户实体信息
+     * @return 修改后的用户信息
+     */
     @PatchMapping("/{id}")
     @Auth(value = "clever-shopping.user.update", name = "修改用户", description = "修改用户信息接口")
     public Result<User> update(@Validated User user, @PathVariable("id") String id) {

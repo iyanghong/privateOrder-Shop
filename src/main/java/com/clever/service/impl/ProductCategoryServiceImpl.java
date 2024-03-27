@@ -35,12 +35,12 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
      *
      * @param pageNumber 页码
      * @param pageSize   每页记录数
-     * @param name 商品分类名称
-     * @param parentId 父级分类id
+     * @param name       商品分类名称
+     * @param parentId   父级分类id
      * @return Page<ProductCategory>
      */
     @Override
-    public Page<ProductCategory> selectPage(Integer pageNumber, Integer pageSize,String name,String parentId) {
+    public Page<ProductCategory> selectPage(Integer pageNumber, Integer pageSize, String name, String parentId) {
         QueryWrapper<ProductCategory> queryWrapper = new QueryWrapper<>();
         if (StringUtils.isNotBlank(name)) {
             queryWrapper.eq("name", name);
@@ -50,6 +50,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
         }
         return productCategoryMapper.selectPage(new Page<ProductCategory>(pageNumber, pageSize), queryWrapper);
     }
+
     /**
      * 根据商品分类id获取商品分类
      *
@@ -60,6 +61,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     public ProductCategory selectById(String id) {
         return productCategoryMapper.selectById(id);
     }
+
     /**
      * 根据父级分类id获取列表
      *
@@ -70,6 +72,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     public List<ProductCategory> selectListByParentId(String parentId) {
         return productCategoryMapper.selectList(new QueryWrapper<ProductCategory>().eq("parent_id", parentId).orderByAsc("id"));
     }
+
     /**
      * 根据创建者id获取列表
      *
@@ -80,13 +83,14 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     public List<ProductCategory> selectListByCreator(String creator) {
         return productCategoryMapper.selectList(new QueryWrapper<ProductCategory>().eq("creator", creator).orderByAsc("id"));
     }
+
     /**
-    * 新建商品分类
-    *
-    * @param productCategory 商品分类实体信息
-    * @param onlineUser   当前登录用户
-    * @return ProductCategory 新建后的商品分类信息
-    */
+     * 新建商品分类
+     *
+     * @param productCategory 商品分类实体信息
+     * @param onlineUser      当前登录用户
+     * @return ProductCategory 新建后的商品分类信息
+     */
     @Override
     public ProductCategory create(ProductCategory productCategory, OnlineUser onlineUser) {
         productCategoryMapper.insert(productCategory);
@@ -95,12 +99,12 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     }
 
     /**
-    * 修改商品分类
-    *
-    * @param productCategory 商品分类实体信息
-    * @param onlineUser   当前登录用户
-    * @return ProductCategory 修改后的商品分类信息
-    */
+     * 修改商品分类
+     *
+     * @param productCategory 商品分类实体信息
+     * @param onlineUser      当前登录用户
+     * @return ProductCategory 修改后的商品分类信息
+     */
     @Override
     public ProductCategory update(ProductCategory productCategory, OnlineUser onlineUser) {
         productCategoryMapper.updateById(productCategory);
@@ -109,16 +113,16 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     }
 
     /**
-    * 保存商品分类
-    *
-    * @param productCategory 商品分类实体信息
-    * @param onlineUser 当前登录用户
-    * @return ProductCategory 保存后的商品分类信息
-    */
+     * 保存商品分类
+     *
+     * @param productCategory 商品分类实体信息
+     * @param onlineUser      当前登录用户
+     * @return ProductCategory 保存后的商品分类信息
+     */
     @Override
     public ProductCategory save(ProductCategory productCategory, OnlineUser onlineUser) {
         if (StringUtils.isNotBlank(productCategory.getId())) {
-           return create(productCategory, onlineUser);
+            return create(productCategory, onlineUser);
         }
         return update(productCategory, onlineUser);
     }
@@ -126,7 +130,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     /**
      * 根据商品分类id删除商品分类信息
      *
-     * @param id 商品分类id
+     * @param id         商品分类id
      * @param onlineUser 当前登录用户
      */
     @Override
@@ -146,10 +150,11 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
         productCategoryMapper.deleteBatchIds(ids);
         log.info("商品分类, 商品分类信息批量删除成功: userId={}, count={}, productCategoryIds={}", onlineUser.getId(), ids.size(), ids.toString());
     }
+
     /**
      * 根据父级分类id删除
      *
-     * @param parentId 父级分类id
+     * @param parentId   父级分类id
      * @param onlineUser 当前登录用户
      */
     @Override
@@ -157,10 +162,11 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
         productCategoryMapper.delete(new QueryWrapper<ProductCategory>().eq("parent_id", parentId));
         log.info("商品分类, 商品分类信息根据parentId删除成功: userId={}, parentId={}", onlineUser.getId(), parentId);
     }
+
     /**
      * 根据创建者id删除
      *
-     * @param creator 创建者id
+     * @param creator    创建者id
      * @param onlineUser 当前登录用户
      */
     @Override

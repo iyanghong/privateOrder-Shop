@@ -6,12 +6,13 @@ import com.clever.bean.model.OnlineUser;
 import java.util.List;
 
 import com.clever.bean.shopping.Cart;
+import com.clever.bean.shopping.projo.output.CartProductDetailOutput;
 
 /**
  * 购物车服务接口
  *
  * @Author xixi
- * @Date 2024-03-26 17:10:18
+ * @Date 2024-03-27 11:46:50
  */
 public interface CartService {
 
@@ -20,11 +21,11 @@ public interface CartService {
      *
      * @param pageNumber 页码
      * @param pageSize   每页记录数
-     * @param userId 用户id
-     * @param productId 商品id
+     * @param userId     用户id
+     * @param productId  商品id
      * @return Page<Cart>
      */
-    Page<Cart> selectPage(Integer pageNumber, Integer pageSize,String userId,String productId);
+    Page<Cart> selectPage(Integer pageNumber, Integer pageSize, String userId, String productId);
 
     /**
      * 根据购物车id获取购物车
@@ -53,34 +54,34 @@ public interface CartService {
     /**
      * 新建购物车
      *
-     * @param cart 购物车实体信息
-     * @param onlineUser   当前登录用户
+     * @param cart       购物车实体信息
+     * @param onlineUser 当前登录用户
      * @return Cart 新建后的购物车信息
      */
     Cart create(Cart cart, OnlineUser onlineUser);
 
     /**
-    * 修改购物车
-    *
-    * @param cart 购物车实体信息
-    * @param onlineUser   当前登录用户
-    * @return Cart 修改后的购物车信息
-    */
+     * 修改购物车
+     *
+     * @param cart       购物车实体信息
+     * @param onlineUser 当前登录用户
+     * @return Cart 修改后的购物车信息
+     */
     Cart update(Cart cart, OnlineUser onlineUser);
 
     /**
-    * 保存购物车
-    *
-    * @param cart 购物车实体信息
-    * @param onlineUser 当前登录用户
-    * @return Cart 保存后的购物车信息
-    */
+     * 保存购物车
+     *
+     * @param cart       购物车实体信息
+     * @param onlineUser 当前登录用户
+     * @return Cart 保存后的购物车信息
+     */
     Cart save(Cart cart, OnlineUser onlineUser);
 
     /**
      * 根据购物车id删除信息
      *
-     * @param id 购物车id
+     * @param id         购物车id
      * @param onlineUser 当前登录用户
      */
     void delete(String id, OnlineUser onlineUser);
@@ -92,19 +93,36 @@ public interface CartService {
      * @param onlineUser 当前登录用户
      */
     void deleteBatchIds(List<String> ids, OnlineUser onlineUser);
+
     /**
      * 根据用户id删除
      *
-     * @param userId 用户id
+     * @param userId     用户id
      * @param onlineUser 当前登录用户
      */
     void deleteByUserId(String userId, OnlineUser onlineUser);
+
     /**
      * 根据商品id删除
      *
-     * @param productId 商品id
+     * @param productId  商品id
      * @param onlineUser 当前登录用户
      */
     void deleteByProductId(String productId, OnlineUser onlineUser);
 
+    /**
+     * 获取用户购物车列表与详情
+     *
+     * @param userId 用户id
+     * @return List<CartProductDetailOutput>
+     */
+    List<CartProductDetailOutput> selectCartProductDetailByUserId(String userId);
+
+    /**
+     * 获取购物车商品详情
+     *
+     * @param ids 购物车id列表
+     * @return List<CartProductDetailOutput>
+     */
+    List<CartProductDetailOutput> selectCartProductDetailByCartIds(List<String> ids);
 }

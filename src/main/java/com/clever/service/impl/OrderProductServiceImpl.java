@@ -20,7 +20,7 @@ import javax.annotation.Resource;
  * 订单商品服务
  *
  * @Author xixi
- * @Date 2024-03-26 17:10:18
+ * @Date 2024-03-27 11:46:50
  */
 @Service
 public class OrderProductServiceImpl implements OrderProductService {
@@ -35,12 +35,12 @@ public class OrderProductServiceImpl implements OrderProductService {
      *
      * @param pageNumber 页码
      * @param pageSize   每页记录数
-     * @param orderId 订单id
-     * @param productId 商品id
+     * @param orderId    订单id
+     * @param productId  商品id
      * @return Page<OrderProduct>
      */
     @Override
-    public Page<OrderProduct> selectPage(Integer pageNumber, Integer pageSize,String orderId,String productId) {
+    public Page<OrderProduct> selectPage(Integer pageNumber, Integer pageSize, String orderId, String productId) {
         QueryWrapper<OrderProduct> queryWrapper = new QueryWrapper<>();
         if (StringUtils.isNotBlank(orderId)) {
             queryWrapper.eq("order_id", orderId);
@@ -50,6 +50,7 @@ public class OrderProductServiceImpl implements OrderProductService {
         }
         return orderProductMapper.selectPage(new Page<OrderProduct>(pageNumber, pageSize), queryWrapper);
     }
+
     /**
      * 根据订单商品id获取订单商品
      *
@@ -60,6 +61,7 @@ public class OrderProductServiceImpl implements OrderProductService {
     public OrderProduct selectById(String id) {
         return orderProductMapper.selectById(id);
     }
+
     /**
      * 根据订单id获取列表
      *
@@ -70,6 +72,18 @@ public class OrderProductServiceImpl implements OrderProductService {
     public List<OrderProduct> selectListByOrderId(String orderId) {
         return orderProductMapper.selectList(new QueryWrapper<OrderProduct>().eq("order_id", orderId).orderByAsc("id"));
     }
+
+    /**
+     * 根据订单id列表获取列表
+     *
+     * @param orderIds 订单id列表
+     * @return List<OrderProduct> 订单商品列表
+     */
+    @Override
+    public List<OrderProduct> selectListByOrderIds(List<String> orderIds) {
+        return orderProductMapper.selectList(new QueryWrapper<OrderProduct>().in("order_id", orderIds).orderByAsc("id"));
+    }
+
     /**
      * 根据商品id获取列表
      *
@@ -80,13 +94,14 @@ public class OrderProductServiceImpl implements OrderProductService {
     public List<OrderProduct> selectListByProductId(String productId) {
         return orderProductMapper.selectList(new QueryWrapper<OrderProduct>().eq("product_id", productId).orderByAsc("id"));
     }
+
     /**
-    * 新建订单商品
-    *
-    * @param orderProduct 订单商品实体信息
-    * @param onlineUser   当前登录用户
-    * @return OrderProduct 新建后的订单商品信息
-    */
+     * 新建订单商品
+     *
+     * @param orderProduct 订单商品实体信息
+     * @param onlineUser   当前登录用户
+     * @return OrderProduct 新建后的订单商品信息
+     */
     @Override
     public OrderProduct create(OrderProduct orderProduct, OnlineUser onlineUser) {
         orderProductMapper.insert(orderProduct);
@@ -95,12 +110,12 @@ public class OrderProductServiceImpl implements OrderProductService {
     }
 
     /**
-    * 修改订单商品
-    *
-    * @param orderProduct 订单商品实体信息
-    * @param onlineUser   当前登录用户
-    * @return OrderProduct 修改后的订单商品信息
-    */
+     * 修改订单商品
+     *
+     * @param orderProduct 订单商品实体信息
+     * @param onlineUser   当前登录用户
+     * @return OrderProduct 修改后的订单商品信息
+     */
     @Override
     public OrderProduct update(OrderProduct orderProduct, OnlineUser onlineUser) {
         orderProductMapper.updateById(orderProduct);
@@ -109,16 +124,16 @@ public class OrderProductServiceImpl implements OrderProductService {
     }
 
     /**
-    * 保存订单商品
-    *
-    * @param orderProduct 订单商品实体信息
-    * @param onlineUser 当前登录用户
-    * @return OrderProduct 保存后的订单商品信息
-    */
+     * 保存订单商品
+     *
+     * @param orderProduct 订单商品实体信息
+     * @param onlineUser   当前登录用户
+     * @return OrderProduct 保存后的订单商品信息
+     */
     @Override
     public OrderProduct save(OrderProduct orderProduct, OnlineUser onlineUser) {
         if (StringUtils.isNotBlank(orderProduct.getId())) {
-           return create(orderProduct, onlineUser);
+            return create(orderProduct, onlineUser);
         }
         return update(orderProduct, onlineUser);
     }
@@ -126,7 +141,7 @@ public class OrderProductServiceImpl implements OrderProductService {
     /**
      * 根据订单商品id删除订单商品信息
      *
-     * @param id 订单商品id
+     * @param id         订单商品id
      * @param onlineUser 当前登录用户
      */
     @Override
@@ -146,10 +161,11 @@ public class OrderProductServiceImpl implements OrderProductService {
         orderProductMapper.deleteBatchIds(ids);
         log.info("订单商品, 订单商品信息批量删除成功: userId={}, count={}, orderProductIds={}", onlineUser.getId(), ids.size(), ids.toString());
     }
+
     /**
      * 根据订单id删除
      *
-     * @param orderId 订单id
+     * @param orderId    订单id
      * @param onlineUser 当前登录用户
      */
     @Override
@@ -157,10 +173,11 @@ public class OrderProductServiceImpl implements OrderProductService {
         orderProductMapper.delete(new QueryWrapper<OrderProduct>().eq("order_id", orderId));
         log.info("订单商品, 订单商品信息根据orderId删除成功: userId={}, orderId={}", onlineUser.getId(), orderId);
     }
+
     /**
      * 根据商品id删除
      *
-     * @param productId 商品id
+     * @param productId  商品id
      * @param onlineUser 当前登录用户
      */
     @Override

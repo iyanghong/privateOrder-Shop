@@ -6,11 +6,11 @@ import com.clever.bean.shopping.Addresses;
 
 
 /**
-* 收货地址Mapper
-*
-* @Author xixi
-* @Date 2024-03-26 17:10:18
-*/
+ * 收货地址Mapper
+ *
+ * @Author xixi
+ * @Date 2024-03-27 11:46:50
+ */
 @Mapper
 public interface AddressesMapper extends BaseMapper<Addresses> {
 

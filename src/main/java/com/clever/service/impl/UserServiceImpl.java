@@ -3,7 +3,7 @@ package com.clever.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.clever.bean.model.OnlineUser;
-import com.clever.bean.shopping.input.UserRegisterInput;
+import com.clever.bean.shopping.projo.input.UserRegisterInput;
 import com.clever.constant.CacheConstant;
 import com.clever.exception.BaseException;
 import com.clever.exception.ConstantException;
@@ -299,7 +299,8 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 充值金额
-     * @param amount 金额
+     *
+     * @param amount     金额
      * @param onlineUser 当前登录用户
      */
     @Override

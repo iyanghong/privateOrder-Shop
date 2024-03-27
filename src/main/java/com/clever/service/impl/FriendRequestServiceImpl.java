@@ -20,7 +20,7 @@ import javax.annotation.Resource;
  * 好友申请服务
  *
  * @Author xixi
- * @Date 2024-03-26 17:10:18
+ * @Date 2024-03-27 17:36:54
  */
 @Service
 public class FriendRequestServiceImpl implements FriendRequestService {
@@ -35,13 +35,13 @@ public class FriendRequestServiceImpl implements FriendRequestService {
      *
      * @param pageNumber 页码
      * @param pageSize   每页记录数
-     * @param userId 用户id
-     * @param friendId 好友id
-     * @param status 好友申请状态 0:未处理 1:已同意 2:已拒绝
+     * @param userId     用户id
+     * @param friendId   好友id
+     * @param status     好友申请状态:0-未处理,1-已同意,2-已拒绝
      * @return Page<FriendRequest>
      */
     @Override
-    public Page<FriendRequest> selectPage(Integer pageNumber, Integer pageSize,String userId,String friendId,Integer status) {
+    public Page<FriendRequest> selectPage(Integer pageNumber, Integer pageSize, String userId, String friendId, Integer status) {
         QueryWrapper<FriendRequest> queryWrapper = new QueryWrapper<>();
         if (StringUtils.isNotBlank(userId)) {
             queryWrapper.eq("user_id", userId);
@@ -54,6 +54,7 @@ public class FriendRequestServiceImpl implements FriendRequestService {
         }
         return friendRequestMapper.selectPage(new Page<FriendRequest>(pageNumber, pageSize), queryWrapper);
     }
+
     /**
      * 根据好友申请id获取好友申请
      *
@@ -64,6 +65,7 @@ public class FriendRequestServiceImpl implements FriendRequestService {
     public FriendRequest selectById(String id) {
         return friendRequestMapper.selectById(id);
     }
+
     /**
      * 根据用户id获取列表
      *
@@ -74,6 +76,7 @@ public class FriendRequestServiceImpl implements FriendRequestService {
     public List<FriendRequest> selectListByUserId(String userId) {
         return friendRequestMapper.selectList(new QueryWrapper<FriendRequest>().eq("user_id", userId).orderByAsc("id"));
     }
+
     /**
      * 根据好友id获取列表
      *
@@ -84,13 +87,14 @@ public class FriendRequestServiceImpl implements FriendRequestService {
     public List<FriendRequest> selectListByFriendId(String friendId) {
         return friendRequestMapper.selectList(new QueryWrapper<FriendRequest>().eq("friend_id", friendId).orderByAsc("id"));
     }
+
     /**
-    * 新建好友申请
-    *
-    * @param friendRequest 好友申请实体信息
-    * @param onlineUser   当前登录用户
-    * @return FriendRequest 新建后的好友申请信息
-    */
+     * 新建好友申请
+     *
+     * @param friendRequest 好友申请实体信息
+     * @param onlineUser    当前登录用户
+     * @return FriendRequest 新建后的好友申请信息
+     */
     @Override
     public FriendRequest create(FriendRequest friendRequest, OnlineUser onlineUser) {
         friendRequestMapper.insert(friendRequest);
@@ -99,12 +103,12 @@ public class FriendRequestServiceImpl implements FriendRequestService {
     }
 
     /**
-    * 修改好友申请
-    *
-    * @param friendRequest 好友申请实体信息
-    * @param onlineUser   当前登录用户
-    * @return FriendRequest 修改后的好友申请信息
-    */
+     * 修改好友申请
+     *
+     * @param friendRequest 好友申请实体信息
+     * @param onlineUser    当前登录用户
+     * @return FriendRequest 修改后的好友申请信息
+     */
     @Override
     public FriendRequest update(FriendRequest friendRequest, OnlineUser onlineUser) {
         friendRequestMapper.updateById(friendRequest);
@@ -113,16 +117,16 @@ public class FriendRequestServiceImpl implements FriendRequestService {
     }
 
     /**
-    * 保存好友申请
-    *
-    * @param friendRequest 好友申请实体信息
-    * @param onlineUser 当前登录用户
-    * @return FriendRequest 保存后的好友申请信息
-    */
+     * 保存好友申请
+     *
+     * @param friendRequest 好友申请实体信息
+     * @param onlineUser    当前登录用户
+     * @return FriendRequest 保存后的好友申请信息
+     */
     @Override
     public FriendRequest save(FriendRequest friendRequest, OnlineUser onlineUser) {
         if (StringUtils.isNotBlank(friendRequest.getId())) {
-           return create(friendRequest, onlineUser);
+            return create(friendRequest, onlineUser);
         }
         return update(friendRequest, onlineUser);
     }
@@ -130,7 +134,7 @@ public class FriendRequestServiceImpl implements FriendRequestService {
     /**
      * 根据好友申请id删除好友申请信息
      *
-     * @param id 好友申请id
+     * @param id         好友申请id
      * @param onlineUser 当前登录用户
      */
     @Override
@@ -150,10 +154,11 @@ public class FriendRequestServiceImpl implements FriendRequestService {
         friendRequestMapper.deleteBatchIds(ids);
         log.info("好友申请, 好友申请信息批量删除成功: userId={}, count={}, friendRequestIds={}", onlineUser.getId(), ids.size(), ids.toString());
     }
+
     /**
      * 根据用户id删除
      *
-     * @param userId 用户id
+     * @param userId     用户id
      * @param onlineUser 当前登录用户
      */
     @Override
@@ -161,10 +166,11 @@ public class FriendRequestServiceImpl implements FriendRequestService {
         friendRequestMapper.delete(new QueryWrapper<FriendRequest>().eq("user_id", userId));
         log.info("好友申请, 好友申请信息根据userId删除成功: userId={}, userId={}", onlineUser.getId(), userId);
     }
+
     /**
      * 根据好友id删除
      *
-     * @param friendId 好友id
+     * @param friendId   好友id
      * @param onlineUser 当前登录用户
      */
     @Override

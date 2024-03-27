@@ -4,16 +4,18 @@ import java.io.Serializable;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import java.util.Date;
+import java.math.BigDecimal;
 
 /**
  * 订单商品
  *
  * @Author xixi
- * @Date 2024-03-26 17:10:17
+ * @Date 2024-03-27 11:46:50
  */
 public class OrderProduct implements Serializable {
 
@@ -38,10 +40,14 @@ public class OrderProduct implements Serializable {
     @NotNull(message = "商品数量不能为空")
     private Integer quantity;
     /**
+     * 已选规格
+     */
+    private String selectedParam;
+    /**
      * 商品价格
      */
-    @NotBlank(message = "商品价格不能为空")
-    private String price;
+    @NotNull(message = "商品价格不能为空")
+    private BigDecimal price;
     /**
      * 创建时间
      */
@@ -50,7 +56,6 @@ public class OrderProduct implements Serializable {
      * 修改时间
      */
     private Date updatedAt;
-
 
 
     /**
@@ -63,6 +68,7 @@ public class OrderProduct implements Serializable {
     public void setId(String id) {
         this.id = id;
     }
+
     /**
      * 订单id
      */
@@ -73,6 +79,7 @@ public class OrderProduct implements Serializable {
     public void setOrderId(String orderId) {
         this.orderId = orderId;
     }
+
     /**
      * 商品id
      */
@@ -83,6 +90,7 @@ public class OrderProduct implements Serializable {
     public void setProductId(String productId) {
         this.productId = productId;
     }
+
     /**
      * 商品数量
      */
@@ -93,16 +101,29 @@ public class OrderProduct implements Serializable {
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
+
+    /**
+     * 已选规格
+     */
+    public String getSelectedParam() {
+        return selectedParam;
+    }
+
+    public void setSelectedParam(String selectedParam) {
+        this.selectedParam = selectedParam;
+    }
+
     /**
      * 商品价格
      */
-    public String getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
+
     /**
      * 创建时间
      */
@@ -113,6 +134,7 @@ public class OrderProduct implements Serializable {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
+
     /**
      * 修改时间
      */

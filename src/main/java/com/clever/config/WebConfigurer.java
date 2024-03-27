@@ -26,6 +26,7 @@ import java.util.List;
 public class WebConfigurer implements WebMvcConfigurer {
 
     private static final Logger log = LoggerFactory.getLogger(WebConfigurer.class);
+
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         log.info("加载跨域拦截");

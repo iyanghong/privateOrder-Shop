@@ -56,4 +56,5 @@ public class ConstantException {
 
     public static ConstantException INSUFFICIENT_BALANCE = new ConstantException(3003, "余额不足");
     public static ConstantException RECHARGE_AMOUNT_CANNOT_BE_LESS_THAN_0 = new ConstantException(3003, "充值金额不能小于0");
+    public static ConstantException INSUFFICIENT_INVENTORY_GOODS = new ConstantException(3004, "%s商品库存不足");
 }

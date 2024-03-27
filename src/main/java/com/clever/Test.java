@@ -16,10 +16,12 @@ public class Test {
         generator();
 //        convertEntityToTs();
     }
-    public static void convertEntityToTs(){
-        JavaToTsConverter.convert("/src/main/java/com/clever/bean","/target/ts");
+
+    public static void convertEntityToTs() {
+        JavaToTsConverter.convert("/src/main/java/com/clever/bean", "/target/ts");
     }
-    public static void generator(){
+
+    public static void generator() {
         // 创建一个GenerateConfig对象，用于配置数据库信息
 //        GenerateConfig generateDatabaseConfig = new GenerateConfig("jdbc:mysql://localhost:3306", "root", "Ts962464");
         GenerateConfig generateDatabaseConfig = new GenerateConfig("jdbc:mysql://localhost:3306/shopping", "root", "Ts962464");
@@ -35,16 +37,16 @@ public class Test {
         generateDatabaseConfig.setControllerPackageName("com.clever.controller");
 
 
-        String tableName = "";
-        generateEntity(tableName,generateDatabaseConfig);
-        generateMapperXML(tableName,generateDatabaseConfig);
-        generateMapper(tableName,generateDatabaseConfig);
-        generateService(tableName,generateDatabaseConfig);
-        generateController(tableName,generateDatabaseConfig);
+        String tableName = "friend,friend_request";
+        generateEntity(tableName, generateDatabaseConfig);
+        generateMapperXML(tableName, generateDatabaseConfig);
+        generateMapper(tableName, generateDatabaseConfig);
+        generateService(tableName, generateDatabaseConfig);
+        generateController(tableName, generateDatabaseConfig);
         generateApiPost(generateDatabaseConfig);
     }
 
-    private static void generateEntity(String tableName,GenerateConfig generateDatabaseConfig) {
+    private static void generateEntity(String tableName, GenerateConfig generateDatabaseConfig) {
         // 创建一个GenerateEntity对象，用于生成实体类
         GenerateEntity handler = new GenerateEntity(generateDatabaseConfig);
         // 生成实体类
@@ -52,7 +54,7 @@ public class Test {
 
     }
 
-    private static void generateMapperXML(String tableName,GenerateConfig generateDatabaseConfig) {
+    private static void generateMapperXML(String tableName, GenerateConfig generateDatabaseConfig) {
         // 创建一个GenerateMapperXML对象，用于生成mapper.xml文件
         GenerateMapperXML generateMapperXML = new GenerateMapperXML(generateDatabaseConfig);
         // 生成mapper.xml文件
@@ -60,7 +62,7 @@ public class Test {
 
     }
 
-    private static void generateMapper(String tableName,GenerateConfig generateDatabaseConfig) {
+    private static void generateMapper(String tableName, GenerateConfig generateDatabaseConfig) {
         // 创建一个GenerateMapper对象，用于生成mapper类
         GenerateMapper generateMapper = new GenerateMapper(generateDatabaseConfig, generateDatabaseConfig.getEntityPackageName());
         // 生成mapper类
@@ -68,14 +70,14 @@ public class Test {
 
     }
 
-    private static void generateService(String tableName,GenerateConfig generateDatabaseConfig) {
+    private static void generateService(String tableName, GenerateConfig generateDatabaseConfig) {
         // 创建一个GenerateService对象，用于生成service类
         GenerateService generateService = new GenerateService(generateDatabaseConfig, generateDatabaseConfig.getEntityPackageName(), "com.clever.mapper");
         // 生成service类
         generateService.generate(tableName, "/src/main/java/com/clever/service");
     }
 
-    private static void generateController(String tableName,GenerateConfig generateDatabaseConfig) {
+    private static void generateController(String tableName, GenerateConfig generateDatabaseConfig) {
         // 创建一个GenerateController对象，用于生成controller类
         GenerateController controller = new GenerateController(generateDatabaseConfig);
         // 生成controller类

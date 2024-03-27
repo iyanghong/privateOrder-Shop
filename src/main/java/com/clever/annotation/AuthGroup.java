@@ -16,6 +16,7 @@ import java.lang.annotation.Target;
 public @interface AuthGroup {
 
     String value();
+
     /**
      * 权限组名
      *
@@ -29,6 +30,7 @@ public @interface AuthGroup {
      * @return 描述
      */
     String description() default "";
+
     /**
      * 是否启用
      *

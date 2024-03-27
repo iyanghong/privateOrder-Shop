@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -13,7 +14,7 @@ import java.util.Date;
  * 购物车
  *
  * @Author xixi
- * @Date 2024-03-26 17:10:17
+ * @Date 2024-03-27 11:46:50
  */
 public class Cart implements Serializable {
 
@@ -33,6 +34,10 @@ public class Cart implements Serializable {
     @NotBlank(message = "商品id不能为空")
     private String productId;
     /**
+     * 已选规格
+     */
+    private String selectedParam;
+    /**
      * 商品数量
      */
     @NotNull(message = "商品数量不能为空")
@@ -47,7 +52,6 @@ public class Cart implements Serializable {
     private Date updatedAt;
 
 
-
     /**
      * 购物车id
      */
@@ -58,6 +62,7 @@ public class Cart implements Serializable {
     public void setId(String id) {
         this.id = id;
     }
+
     /**
      * 用户id
      */
@@ -68,6 +73,7 @@ public class Cart implements Serializable {
     public void setUserId(String userId) {
         this.userId = userId;
     }
+
     /**
      * 商品id
      */
@@ -78,6 +84,18 @@ public class Cart implements Serializable {
     public void setProductId(String productId) {
         this.productId = productId;
     }
+
+    /**
+     * 已选规格
+     */
+    public String getSelectedParam() {
+        return selectedParam;
+    }
+
+    public void setSelectedParam(String selectedParam) {
+        this.selectedParam = selectedParam;
+    }
+
     /**
      * 商品数量
      */
@@ -88,6 +106,7 @@ public class Cart implements Serializable {
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
+
     /**
      * 创建时间
      */
@@ -98,6 +117,7 @@ public class Cart implements Serializable {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
+
     /**
      * 修改时间
      */

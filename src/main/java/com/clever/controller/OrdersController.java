@@ -1,6 +1,7 @@
 package com.clever.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.clever.bean.shopping.projo.output.OrdersDetailOutput;
 import com.clever.util.SpringUtil;
 import com.clever.annotation.Auth;
 import com.clever.annotation.AuthGroup;
@@ -37,21 +38,22 @@ public class OrdersController {
      *
      * @param pageNumber 页码
      * @param pageSize   每页记录数
-     * @param userId 用户id
-     * @param status 订单状态 0:未支付 1:已支付 2:已发货 3:已收货 4:已评价 5:已取消
+     * @param userId     用户id
+     * @param status     订单状态 0:未支付 1:已支付 2:已发货 3:已收货 4:已评价 5:已取消
      * @return 当前页数据
      */
     @GetMapping("/page/{pageNumber}/{pageSize}")
     @Auth(value = "clever-shopping.orders.page", name = "订单分页", description = "订单分页接口")
-    public Result<Page<Orders>> selectPage(@PathVariable("pageNumber") Integer pageNumber, @PathVariable("pageSize") Integer pageSize,String userId,Integer status) {
+    public Result<Page<OrdersDetailOutput>> selectPage(@PathVariable("pageNumber") Integer pageNumber, @PathVariable("pageSize") Integer pageSize, String userId, Integer status) {
         return new Result<>(ordersService.selectPage(pageNumber, pageSize, userId, status), "分页数据查询成功");
     }
+
     /**
-    * 根据用户id获取列表
-    *
-    * @param userId 用户id
-    * @return List<Orders> 订单列表
-    */
+     * 根据用户id获取列表
+     *
+     * @param userId 用户id
+     * @return List<Orders> 订单列表
+     */
     @GetMapping("/listByUserId/{userId}")
     @Auth(value = "clever-shopping.orders.listByUserId", name = "根据用户id获取订单列表", description = "根据用户id获取订单列表接口")
     public Result<List<Orders>> selectListByUserId(@PathVariable("userId") String userId) {
@@ -59,34 +61,36 @@ public class OrdersController {
     }
 
     /**
-    * 根据订单id获取订单信息
-    *
-    * @param id 订单id
-    * @return 订单信息
-    */
+     * 根据订单id获取订单信息
+     *
+     * @param id 订单id
+     * @return 订单信息
+     */
     @GetMapping("/{id}")
     @Auth(value = "clever-system.orders.selectById", name = "根据订单id获取订单信息", description = "根据订单id获取订单信息接口")
     public Result<Orders> selectById(@PathVariable("id") String id) {
-    return new Result<>(ordersService.selectById(id), "查询成功");
+        return new Result<>(ordersService.selectById(id), "查询成功");
     }
+
     /**
-    * 创建订单信息
-    *
-    * @param orders 订单实体信息
-    * @return 创建后的订单信息
-    */
+     * 创建订单信息
+     *
+     * @param cartIds 购物车列表
+     * @return 创建后的订单信息
+     */
     @PostMapping("")
     @Auth(value = "clever-shopping.orders.create", name = "创建订单", description = "创建订单信息接口")
-    public Result<Orders> create(@Validated Orders orders) {
+    public Result<Orders> create(@Validated List<String> cartIds) {
         OnlineUser onlineUser = SpringUtil.getOnlineUser();
-        return new Result<>(ordersService.create(orders, onlineUser), "创建成功");
+        return new Result<>(ordersService.create(cartIds, onlineUser), "下单成功");
     }
+
     /**
-    * 修改订单信息
-    *
-    * @param orders 订单实体信息
-    * @return 修改后的订单信息
-    */
+     * 修改订单信息
+     *
+     * @param orders 订单实体信息
+     * @return 修改后的订单信息
+     */
     @PatchMapping("/{id}")
     @Auth(value = "clever-shopping.orders.update", name = "修改订单", description = "修改订单信息接口")
     public Result<Orders> update(@Validated Orders orders, @PathVariable("id") String id) {

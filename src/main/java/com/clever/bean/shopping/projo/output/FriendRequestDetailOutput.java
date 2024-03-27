@@ -1,29 +1,23 @@
-package com.clever.bean.shopping.input;
+package com.clever.bean.shopping.projo.output;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.io.Serializable;
+import com.clever.bean.shopping.FriendRequest;
 
 /**
  * @Author xixi
- * @Date 2024-03-26 17:01
+ * @Date 2024-03-27 17:37
  **/
-public class UserRegisterInput implements Serializable {
+public class FriendRequestDetailOutput extends FriendRequest {
+
     /**
      * 用户名
      */
-    @NotBlank(message = "用户名不能为空")
     private String username;
-    /**
-     * 密码
-     */
-    @NotBlank(message = "密码不能为空")
-    private String password;
+
     /**
      * 昵称
      */
-    @NotBlank(message = "昵称不能为空")
     private String nickname;
+
     /**
      * 性别:0-未知,1-男,2-女
      */
@@ -32,11 +26,12 @@ public class UserRegisterInput implements Serializable {
      * 头像
      */
     private String avatar;
+
     /**
      * 用户类型 0:普通用户 1:商家
      */
-    @NotNull(message = "用户类型 0不能为空")
     private Integer type;
+
     /**
      * 手机号
      */
@@ -46,20 +41,13 @@ public class UserRegisterInput implements Serializable {
      */
     private String email;
 
+
     public String getUsername() {
         return username;
     }
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getNickname() {

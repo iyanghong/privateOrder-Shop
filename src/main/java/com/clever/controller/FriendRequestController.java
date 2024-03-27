@@ -20,7 +20,7 @@ import javax.annotation.Resource;
  * 好友申请接口
  *
  * @Author xixi
- * @Date 2024-03-26 17:10:18
+ * @Date 2024-03-27 17:36:54
  */
 @RestController
 @Validated
@@ -37,33 +37,35 @@ public class FriendRequestController {
      *
      * @param pageNumber 页码
      * @param pageSize   每页记录数
-     * @param userId 用户id
-     * @param friendId 好友id
-     * @param status 好友申请状态 0:未处理 1:已同意 2:已拒绝
+     * @param userId     用户id
+     * @param friendId   好友id
+     * @param status     好友申请状态:0-未处理,1-已同意,2-已拒绝
      * @return 当前页数据
      */
     @GetMapping("/page/{pageNumber}/{pageSize}")
     @Auth(value = "clever-shopping.friendRequest.page", name = "好友申请分页", description = "好友申请分页接口")
-    public Result<Page<FriendRequest>> selectPage(@PathVariable("pageNumber") Integer pageNumber, @PathVariable("pageSize") Integer pageSize,String userId,String friendId,Integer status) {
+    public Result<Page<FriendRequest>> selectPage(@PathVariable("pageNumber") Integer pageNumber, @PathVariable("pageSize") Integer pageSize, String userId, String friendId, Integer status) {
         return new Result<>(friendRequestService.selectPage(pageNumber, pageSize, userId, friendId, status), "分页数据查询成功");
     }
+
     /**
-    * 根据用户id获取列表
-    *
-    * @param userId 用户id
-    * @return List<FriendRequest> 好友申请列表
-    */
+     * 根据用户id获取列表
+     *
+     * @param userId 用户id
+     * @return List<FriendRequest> 好友申请列表
+     */
     @GetMapping("/listByUserId/{userId}")
     @Auth(value = "clever-shopping.friendRequest.listByUserId", name = "根据用户id获取好友申请列表", description = "根据用户id获取好友申请列表接口")
     public Result<List<FriendRequest>> selectListByUserId(@PathVariable("userId") String userId) {
         return new Result<>(friendRequestService.selectListByUserId(userId), "查询成功");
     }
+
     /**
-    * 根据好友id获取列表
-    *
-    * @param friendId 好友id
-    * @return List<FriendRequest> 好友申请列表
-    */
+     * 根据好友id获取列表
+     *
+     * @param friendId 好友id
+     * @return List<FriendRequest> 好友申请列表
+     */
     @GetMapping("/listByFriendId/{friendId}")
     @Auth(value = "clever-shopping.friendRequest.listByFriendId", name = "根据好友id获取好友申请列表", description = "根据好友id获取好友申请列表接口")
     public Result<List<FriendRequest>> selectListByFriendId(@PathVariable("friendId") String friendId) {
@@ -71,34 +73,36 @@ public class FriendRequestController {
     }
 
     /**
-    * 根据好友申请id获取好友申请信息
-    *
-    * @param id 好友申请id
-    * @return 好友申请信息
-    */
+     * 根据好友申请id获取好友申请信息
+     *
+     * @param id 好友申请id
+     * @return 好友申请信息
+     */
     @GetMapping("/{id}")
     @Auth(value = "clever-system.friendRequest.selectById", name = "根据好友申请id获取好友申请信息", description = "根据好友申请id获取好友申请信息接口")
     public Result<FriendRequest> selectById(@PathVariable("id") String id) {
-    return new Result<>(friendRequestService.selectById(id), "查询成功");
+        return new Result<>(friendRequestService.selectById(id), "查询成功");
     }
+
     /**
-    * 创建好友申请信息
-    *
-    * @param friendRequest 好友申请实体信息
-    * @return 创建后的好友申请信息
-    */
+     * 创建好友申请信息
+     *
+     * @param friendRequest 好友申请实体信息
+     * @return 创建后的好友申请信息
+     */
     @PostMapping("")
     @Auth(value = "clever-shopping.friendRequest.create", name = "创建好友申请", description = "创建好友申请信息接口")
     public Result<FriendRequest> create(@Validated FriendRequest friendRequest) {
         OnlineUser onlineUser = SpringUtil.getOnlineUser();
         return new Result<>(friendRequestService.create(friendRequest, onlineUser), "创建成功");
     }
+
     /**
-    * 修改好友申请信息
-    *
-    * @param friendRequest 好友申请实体信息
-    * @return 修改后的好友申请信息
-    */
+     * 修改好友申请信息
+     *
+     * @param friendRequest 好友申请实体信息
+     * @return 修改后的好友申请信息
+     */
     @PatchMapping("/{id}")
     @Auth(value = "clever-shopping.friendRequest.update", name = "修改好友申请", description = "修改好友申请信息接口")
     public Result<FriendRequest> update(@Validated FriendRequest friendRequest, @PathVariable("id") String id) {

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+
 import javax.validation.constraints.NotBlank;
 
 import java.util.Date;
@@ -12,7 +13,7 @@ import java.util.Date;
  * 好友
  *
  * @Author xixi
- * @Date 2024-03-26 17:10:17
+ * @Date 2024-03-27 17:36:54
  */
 public class Friend implements Serializable {
 
@@ -32,6 +33,10 @@ public class Friend implements Serializable {
     @NotBlank(message = "好友id不能为空")
     private String friendId;
     /**
+     * 备注
+     */
+    private String remark;
+    /**
      * 创建时间
      */
     private Date createdAt;
@@ -39,7 +44,6 @@ public class Friend implements Serializable {
      * 修改时间
      */
     private Date updatedAt;
-
 
 
     /**
@@ -52,6 +56,7 @@ public class Friend implements Serializable {
     public void setId(String id) {
         this.id = id;
     }
+
     /**
      * 用户id
      */
@@ -62,6 +67,7 @@ public class Friend implements Serializable {
     public void setUserId(String userId) {
         this.userId = userId;
     }
+
     /**
      * 好友id
      */
@@ -72,6 +78,18 @@ public class Friend implements Serializable {
     public void setFriendId(String friendId) {
         this.friendId = friendId;
     }
+
+    /**
+     * 备注
+     */
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
     /**
      * 创建时间
      */
@@ -82,6 +100,7 @@ public class Friend implements Serializable {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
+
     /**
      * 修改时间
      */

@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.FieldFill;
+
 import javax.validation.constraints.NotBlank;
 
 import java.util.Date;
@@ -51,7 +52,6 @@ public class ProductCategory implements Serializable {
     private Date updatedAt;
 
 
-
     /**
      * 商品分类id
      */
@@ -62,6 +62,7 @@ public class ProductCategory implements Serializable {
     public void setId(String id) {
         this.id = id;
     }
+
     /**
      * 商品分类名称
      */
@@ -72,6 +73,7 @@ public class ProductCategory implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
     /**
      * 商品分类描述
      */
@@ -82,6 +84,7 @@ public class ProductCategory implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
+
     /**
      * 父级分类id
      */
@@ -92,6 +95,7 @@ public class ProductCategory implements Serializable {
     public void setParentId(String parentId) {
         this.parentId = parentId;
     }
+
     /**
      * 创建者id
      */
@@ -102,6 +106,7 @@ public class ProductCategory implements Serializable {
     public void setCreator(String creator) {
         this.creator = creator;
     }
+
     /**
      * 创建时间
      */
@@ -112,6 +117,7 @@ public class ProductCategory implements Serializable {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
+
     /**
      * 修改时间
      */

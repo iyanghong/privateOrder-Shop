@@ -89,6 +89,16 @@ public class TableMeta {
         return false;
     }
 
+    // 是否包含BigDecimal类型
+    public boolean isHasDecimalColumn() {
+        for (ColumnMeta column : columns) {
+            if (column.getJavaType().equalsIgnoreCase("BigDecimal")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * 是否存在需要判断不为空的字段
      *
