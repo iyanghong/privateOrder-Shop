@@ -1,12 +1,10 @@
 package com.clever.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.db.Db;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.clever.bean.model.OnlineUser;
 import com.clever.bean.shopping.OrderProduct;
-import com.clever.bean.shopping.Product;
 import com.clever.bean.shopping.projo.output.CartProductDetailOutput;
 import com.clever.bean.shopping.projo.output.OrdersDetailOutput;
 import com.clever.exception.BaseException;
@@ -14,7 +12,6 @@ import com.clever.exception.ConstantException;
 import com.clever.service.CartService;
 import com.clever.service.OrderProductService;
 import com.clever.service.ProductService;
-import net.minidev.json.writer.BeansMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

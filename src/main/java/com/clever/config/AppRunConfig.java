@@ -22,11 +22,21 @@ public class AppRunConfig {
      */
     @Value("${spring.application.datacenterId}")
     private String datacenterId = "";
+
     /**
-     * 默认在线用户id，用于开发调试
+     * 文件上传目录
      */
-    @Value("${spring.application.defaultOnlineUserId}")
-    private String defaultOnlineUserId = "";
+    @Value("${spring.application.uploadPath}")
+    private String uploadFileFolder = "";
+
+
+    public String getUploadFileFolder() {
+        return uploadFileFolder;
+    }
+
+    public void setUploadFileFolder(String uploadFileFolder) {
+        this.uploadFileFolder = uploadFileFolder;
+    }
 
     public String getAppName() {
         return appName;
@@ -52,11 +62,4 @@ public class AppRunConfig {
         this.datacenterId = datacenterId;
     }
 
-    public String getDefaultOnlineUserId() {
-        return defaultOnlineUserId;
-    }
-
-    public void setDefaultOnlineUserId(String defaultOnlineUserId) {
-        this.defaultOnlineUserId = defaultOnlineUserId;
-    }
 }

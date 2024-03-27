@@ -7,7 +7,7 @@ import com.clever.bean.shopping.projo.input.UserRegisterInput;
 import com.clever.constant.CacheConstant;
 import com.clever.exception.BaseException;
 import com.clever.exception.ConstantException;
-import com.clever.service.RedisService;
+import com.clever.util.JwtUtil;
 import com.clever.util.RegularUtil;
 import com.clever.util.SpringUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -40,8 +40,6 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     private UserMapper userMapper;
-    @Resource
-    private RedisService redis;
 
     /**
      * 分页查询用户列表
@@ -251,16 +249,15 @@ public class UserServiceImpl implements UserService {
             log.error("用户登录, 用户不存在: account={}, ip={}", account, ip);
             throw new BaseException(ConstantException.USER_ACCOUNT_NOT_FOUND);
         }
-        // 生成token
-        String token = SpringUtil.getUuid();
         // 更新用户登录时间
         user.setLastLoginTime(now);
         // 更新用户登录ip
         user.setLoginIp(ip);
+        // 生成token
+        String token = JwtUtil.createToken(user);
         // 创建在线用户
         OnlineUser onlineUser = new OnlineUser(user, token);
-        // 设置在线用户
-        redis.setString(CacheConstant.getOnlineKeyName(token), onlineUser, 3, TimeUnit.HOURS);
+
         // 更新用户信息
         User updateUser = new User();
         updateUser.setId(user.getId());
@@ -278,7 +275,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public void logout(OnlineUser onlineUser) {
-        redis.delKeys(CacheConstant.getOnlineKeyName(onlineUser.getToken()));
+//        redis.delKeys(CacheConstant.getOnlineKeyName(onlineUser.getToken()));
         log.info("用户退出登录, 用户退出登录成功: userId={}", onlineUser.getId());
     }
 
@@ -290,7 +287,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public OnlineUser getOnlineUserByToken(String token) {
-        OnlineUser onlineUser = redis.getString(CacheConstant.getOnlineKeyName(token));
+        OnlineUser onlineUser = SpringUtil.getOnlineUser();
         if (onlineUser == null) {
             throw new BaseException(ConstantException.USER_NO_ONLINE);
         }

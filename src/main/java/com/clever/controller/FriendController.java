@@ -1,6 +1,7 @@
 package com.clever.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.clever.bean.shopping.projo.output.FriendDetailOutput;
 import com.clever.util.SpringUtil;
 import com.clever.annotation.Auth;
 import com.clever.annotation.AuthGroup;
@@ -53,10 +54,11 @@ public class FriendController {
      * @param userId 用户id
      * @return List<Friend> 好友列表
      */
-    @GetMapping("/listByUserId/{userId}")
-    @Auth(value = "clever-shopping.friend.listByUserId", name = "根据用户id获取好友列表", description = "根据用户id获取好友列表接口")
-    public Result<List<Friend>> selectListByUserId(@PathVariable("userId") String userId) {
-        return new Result<>(friendService.selectListByUserId(userId), "查询成功");
+    @GetMapping("/selectMyFriend")
+    @Auth(value = "clever-shopping.friend.selectMyFriend", name = "根据用户id获取好友列表", description = "根据用户id获取好友列表接口")
+    public Result<List<FriendDetailOutput>> selectMyFriend() {
+        OnlineUser onlineUser = SpringUtil.getOnlineUser();
+        return new Result<>(friendService.selectMyFriend(onlineUser.getId()), "查询成功");
     }
 
     /**

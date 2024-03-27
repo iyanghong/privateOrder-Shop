@@ -1,6 +1,7 @@
 package com.clever.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.clever.bean.shopping.projo.input.UserRegisterInput;
 import com.clever.util.SpringUtil;
 import com.clever.annotation.Auth;
 import com.clever.annotation.AuthGroup;
@@ -15,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.constraints.NotBlank;
 
 /**
  * 用户接口
@@ -32,6 +34,14 @@ public class UserController {
     private UserService userService;
 
 
+    @PostMapping("/login")
+    public Result<OnlineUser> login(@NotBlank(message = "账户不能为空") String account,@NotBlank(message = "密码不能为空") String password) {
+        return new Result<>(userService.login(account, password),"登录成功");
+    }
+    @PostMapping("/register")
+    public Result<User> register(@Validated UserRegisterInput userRegisterInput) {
+        return new Result<>(userService.register(userRegisterInput),"注册成功");
+    }
     /**
      * 分页查询用户列表
      *

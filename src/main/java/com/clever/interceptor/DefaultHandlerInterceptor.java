@@ -1,13 +1,19 @@
 package com.clever.interceptor;
 
+import com.auth0.jwt.interfaces.Claim;
+import com.clever.bean.model.OnlineUser;
+import com.clever.bean.shopping.User;
 import com.clever.config.AppRunConfig;
-import com.clever.constant.CacheConstant;
-import com.clever.service.RedisService;
+import com.clever.exception.BaseException;
+import com.clever.exception.ConstantException;
+import com.clever.service.UserService;
+import com.clever.util.JwtUtil;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 /**
  * @Author xixi
@@ -15,11 +21,12 @@ import javax.servlet.http.HttpServletResponse;
  **/
 public class DefaultHandlerInterceptor implements HandlerInterceptor {
 
-    @Resource
-    private RedisService redis;
 
     @Resource
     private AppRunConfig appRunConfig;
+
+    @Resource
+    private UserService userService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -28,17 +35,15 @@ public class DefaultHandlerInterceptor implements HandlerInterceptor {
             return true;
         }
         String token = request.getHeader("Authorization");
-        Object onlineUser = redis.getString(CacheConstant.getOnlineKeyName(token));
-        if (onlineUser != null) {
-            request.setAttribute("online", onlineUser);
+        Map<String, Claim> userData = JwtUtil.verifyToken(token);
+        if (userData == null) {
+            throw new BaseException(ConstantException.TOKEN_INVALID);
         }
-        /*else {
-            if (StringUtils.isNotBlank(appRunConfig.getDefaultOnlineUserId())) {
-                OnlineUser user = new OnlineUser();
-                user.setId(appRunConfig.getDefaultOnlineUserId());
-                request.setAttribute("online", user);
-            }
-        }*/
+        User user = new User();
+        user.setId(userData.get("id").asString());
+        OnlineUser onlineUser = new OnlineUser(user,token);
+        request.setAttribute("online", onlineUser);
+
         return true;
     }
 }

@@ -46,6 +46,7 @@ public class ConstantException {
     public static ConstantException PARAMETER_VERIFICATION_EMAIL_FAIL = new ConstantException(1006, "错误的邮箱");
     public static ConstantException ACCOUNT_IS_EXISTED = new ConstantException(1007, "账号已被注册");
     public static ConstantException ACTIVATION_LINKS_EXPIRED = new ConstantException(1008, "激活链接已失效");
+    public static ConstantException TOKEN_INVALID = new ConstantException(1009, "无效Token");
 
 
     public static ConstantException EMAIL_SEND_OFTEN = new ConstantException(2001, "邮件已发送, 请查看您的邮箱");
@@ -57,4 +58,6 @@ public class ConstantException {
     public static ConstantException INSUFFICIENT_BALANCE = new ConstantException(3003, "余额不足");
     public static ConstantException RECHARGE_AMOUNT_CANNOT_BE_LESS_THAN_0 = new ConstantException(3003, "充值金额不能小于0");
     public static ConstantException INSUFFICIENT_INVENTORY_GOODS = new ConstantException(3004, "%s商品库存不足");
+    public static ConstantException FILE_UPLOAD_FAIL = new ConstantException(3005, "文件上传失败");
+    public static ConstantException FILE_VIEW_FAIL = new ConstantException(3006, "文件访问错误");
 }

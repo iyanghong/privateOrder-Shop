@@ -11,10 +11,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -27,6 +26,9 @@ public class WebConfigurer implements WebMvcConfigurer {
 
     private static final Logger log = LoggerFactory.getLogger(WebConfigurer.class);
 
+    @Resource
+    private AppRunConfig appRunConfig;
+
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         log.info("加载跨域拦截");
@@ -36,6 +38,11 @@ public class WebConfigurer implements WebMvcConfigurer {
                 .allowedMethods("GET", "POST", "DELETE", "PUT", "OPTIONS")
                 .allowedHeaders("*")
                 .maxAge(1800 * 30);
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/file/resource/**").addResourceLocations(appRunConfig.getUploadFileFolder());
     }
 
     @Override
@@ -68,14 +75,13 @@ public class WebConfigurer implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         log.info("加载接口拦截器");
-        registry.addInterceptor(loadSystemHandlerInterceptor()).addPathPatterns("/**")
-                .excludePathPatterns("/user/login");
+        registry.addInterceptor(new DefaultHandlerInterceptor()).addPathPatterns("/**").excludePathPatterns(
+                "/user/login",
+                "/user/register",
+                "/file/resource/**/**"
+        );
     }
 
-    @Bean
-    public DefaultHandlerInterceptor loadSystemHandlerInterceptor() {
-        return new DefaultHandlerInterceptor();
-    }
 
     /**
      * 自定义id生成器
