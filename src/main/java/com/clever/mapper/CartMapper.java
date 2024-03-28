@@ -1,6 +1,7 @@
 package com.clever.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.clever.bean.shopping.projo.output.CartProductDetailVO;
 import org.apache.ibatis.annotations.Mapper;
 import com.clever.bean.shopping.Cart;
@@ -32,4 +33,5 @@ public interface CartMapper extends BaseMapper<Cart> {
      * @return List<CartProductDetailOutput>
      */
     List<CartProductDetailVO> selectCartProductDetailByCartIds(List<String> ids);
+    Page<CartProductDetailVO> selectListPage(Page<CartProductDetailVO> page,String userId);
 }

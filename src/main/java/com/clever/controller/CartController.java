@@ -1,6 +1,7 @@
 package com.clever.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.clever.bean.shopping.projo.output.CartProductDetailVO;
 import com.clever.util.SpringUtil;
 import com.clever.annotation.Auth;
 import com.clever.annotation.AuthGroup;
@@ -46,8 +47,21 @@ public class CartController {
      */
     @GetMapping("/page/{pageNumber}/{pageSize}")
     @Auth(value = "clever-shopping.cart.page", name = "购物车分页", description = "购物车分页接口")
-    public Result<Page<Cart>> selectPage(@PathVariable("pageNumber") Integer pageNumber, @PathVariable("pageSize") Integer pageSize, String userId, String productId) {
-        return new Result<>(cartService.selectPage(pageNumber, pageSize, userId, productId), "分页数据查询成功");
+    public Result<Page<CartProductDetailVO>> selectPage(@PathVariable("pageNumber") Integer pageNumber, @PathVariable("pageSize") Integer pageSize, String userId, String productId) {
+        return new Result<>(cartService.selectPage(pageNumber, pageSize, userId), "分页数据查询成功");
+    }
+
+    /**
+     * 我的购物车(分页查询购物车列表)
+     *
+     * @param pageNumber 页码
+     * @param pageSize   每页记录数
+     * @return 当前页数据
+     */
+    @GetMapping("/my/{pageNumber}/{pageSize}")
+    @Auth(value = "clever-shopping.cart.page", name = "购物车分页", description = "购物车分页接口")
+    public Result<Page<CartProductDetailVO>> my(@PathVariable("pageNumber") Integer pageNumber, @PathVariable("pageSize") Integer pageSize) {
+        return new Result<>(cartService.selectPage(pageNumber, pageSize, SpringUtil.getOnlineUser().getId()), "分页数据查询成功");
     }
 
     /**

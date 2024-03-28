@@ -22,10 +22,9 @@ public interface CartService {
      * @param pageNumber 页码
      * @param pageSize   每页记录数
      * @param userId     用户id
-     * @param productId  商品id
      * @return Page<Cart>
      */
-    Page<Cart> selectPage(Integer pageNumber, Integer pageSize, String userId, String productId);
+    Page<CartProductDetailVO> selectPage(Integer pageNumber, Integer pageSize, String userId);
 
     /**
      * 根据购物车id获取购物车
@@ -54,10 +53,10 @@ public interface CartService {
     /**
      * 新建购物车
      *
-     * @param productId 商品id
-     * @param quantity 商品数量
+     * @param productId     商品id
+     * @param quantity      商品数量
      * @param selectedParam 商品规格
-     * @param onlineUser 当前登录用户
+     * @param onlineUser    当前登录用户
      * @return Cart 新建后的购物车信息
      */
     Cart create(String productId, Integer quantity, String selectedParam, OnlineUser onlineUser);

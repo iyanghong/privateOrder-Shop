@@ -38,19 +38,11 @@ public class CartServiceImpl implements CartService {
      * @param pageNumber 页码
      * @param pageSize   每页记录数
      * @param userId     用户id
-     * @param productId  商品id
      * @return Page<Cart>
      */
     @Override
-    public Page<Cart> selectPage(Integer pageNumber, Integer pageSize, String userId, String productId) {
-        QueryWrapper<Cart> queryWrapper = new QueryWrapper<>();
-        if (StringUtils.isNotBlank(userId)) {
-            queryWrapper.eq("user_id", userId);
-        }
-        if (StringUtils.isNotBlank(productId)) {
-            queryWrapper.eq("product_id", productId);
-        }
-        return cartMapper.selectPage(new Page<Cart>(pageNumber, pageSize), queryWrapper);
+    public Page<CartProductDetailVO> selectPage(Integer pageNumber, Integer pageSize, String userId) {
+        return cartMapper.selectListPage(new Page<CartProductDetailVO>(pageNumber, pageSize),userId);
     }
 
     /**
