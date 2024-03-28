@@ -74,6 +74,12 @@ public class FriendRequestServiceImpl implements FriendRequestService {
         friend.setFriendId(friendRequest.getFriendId());
         friend.setUserId(friendRequest.getUserId());
         friendService.create(friend, SpringUtil.getOnlineUser());
+
+        //他的好友列表也增加我的
+        Friend targetFriend = new Friend();
+        targetFriend.setFriendId(friend.getUserId());
+        targetFriend.setUserId(friend.getFriendId());
+        friendService.create(targetFriend, SpringUtil.getOnlineUser());
         log.info("好友申请, 好友申请信息同意成功: userId={}, friendRequestId={}", SpringUtil.getOnlineUser().getId(), id);
     }
 

@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS product
     name          varchar(50)    NOT NULL COMMENT '商品名称',
     description   text           NULL COMMENT '商品描述',
     price         decimal(10, 2) NOT NULL COMMENT '商品价格',
-    img_url       varchar(255)   NULL     default '[]' COMMENT '商品图片地址',
+    img_url       text   NULL     default '[]' COMMENT '商品图片地址',
     specification text           NULL COMMENT '商品规格',
     stock         int            NOT NULL DEFAULT 0 COMMENT '商品库存',
     status        tinyint        NOT NULL DEFAULT 0 COMMENT '商品状态:0-下架,1-上架',
