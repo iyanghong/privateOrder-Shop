@@ -35,7 +35,7 @@ public class UserRegisterInput implements Serializable {
     /**
      * 用户类型 0:普通用户 1:商家
      */
-    @NotNull(message = "用户类型 0不能为空")
+    @NotNull(message = "用户类型")
     private Integer type;
     /**
      * 手机号

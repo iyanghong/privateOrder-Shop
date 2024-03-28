@@ -15,7 +15,7 @@ import java.util.Date;
  * 商品分类
  *
  * @Author xixi
- * @Date 2024-03-26 17:10:17
+ * @Date 2024-03-28 09:00:55
  */
 public class ProductCategory implements Serializable {
 
@@ -37,6 +37,10 @@ public class ProductCategory implements Serializable {
      * 父级分类id
      */
     private String parentId;
+    /**
+     * 排序号
+     */
+    private Integer sortNo;
     /**
      * 创建者id
      */
@@ -94,6 +98,17 @@ public class ProductCategory implements Serializable {
 
     public void setParentId(String parentId) {
         this.parentId = parentId;
+    }
+
+    /**
+     * 排序号
+     */
+    public Integer getSortNo() {
+        return sortNo;
+    }
+
+    public void setSortNo(Integer sortNo) {
+        this.sortNo = sortNo;
     }
 
     /**

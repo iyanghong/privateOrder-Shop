@@ -15,6 +15,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * 购物车接口
@@ -86,14 +89,16 @@ public class CartController {
     /**
      * 创建购物车信息
      *
-     * @param cart 购物车实体信息
+     * @param productId     商品id
+     * @param quantity      商品数量
+     * @param selectedParam 商品规格
      * @return 创建后的购物车信息
      */
     @PostMapping("")
     @Auth(value = "clever-shopping.cart.create", name = "创建购物车", description = "创建购物车信息接口")
-    public Result<Cart> create(@Validated Cart cart) {
+    public Result<Cart> create(@NotBlank(message = "请选择商品") String productId, @NotNull(message = "请选择商品数量") @Min(value = 1, message = "商品数量不能小于0") Integer quantity, String selectedParam) {
         OnlineUser onlineUser = SpringUtil.getOnlineUser();
-        return new Result<>(cartService.create(cart, onlineUser), "创建成功");
+        return new Result<>(cartService.create(productId, quantity, selectedParam, onlineUser), "创建成功");
     }
 
     /**
@@ -108,19 +113,6 @@ public class CartController {
         OnlineUser onlineUser = SpringUtil.getOnlineUser();
         cart.setId(id);
         return new Result<>(cartService.update(cart, onlineUser), "修改成功");
-    }
-
-    /**
-     * 保存购物车信息
-     *
-     * @param cart 购物车实体信息
-     * @return 保存后的购物车信息
-     */
-    @PostMapping("/save")
-    @Auth(value = "clever-shopping.cart.save", name = "保存购物车", description = "保存购物车信息接口")
-    public Result<Cart> save(@Validated Cart cart) {
-        OnlineUser onlineUser = SpringUtil.getOnlineUser();
-        return new Result<>(cartService.save(cart, onlineUser), "保存成功");
     }
 
     /**

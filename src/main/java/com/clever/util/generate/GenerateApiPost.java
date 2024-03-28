@@ -39,6 +39,7 @@ public class GenerateApiPost extends BaseGenerator {
     protected void handler(List<TableMeta> tableMetaList, String basePath) {
         count = 0;
         LinkedHashMap<String, Object> folder = initFolder(config.getAppName());
+        HashMap<String,String> variable = new HashMap<>();
         List<LinkedHashMap<String, Object>> modules = new ArrayList<>();
         for (TableMeta tableMeta : tableMetaList) {
 //            if (tableMeta.com)
@@ -71,12 +72,24 @@ public class GenerateApiPost extends BaseGenerator {
             item.put("children", children);
             modules.add(item);
 
+            tableMeta.getColumns().forEach(columnMeta -> {
+                variable.put(columnMeta.getLowerCamelCaseName(),columnMeta.getColumnComment());
+            });
         }
         folder.put("children", modules);
         String filePath = Paths.get(getBasePathOrCreate(basePath), toDTCamelCase(config.getAppName()) + "ApiPost.json").toString();
         // 写入文件
         try (FileWriter writer = new FileWriter(filePath)) {
             writer.write(JSONObject.toJSONString(folder));
+            log.info("The apipost generate complete. count = '{}' filePath = {}", count, filePath);
+        } catch (IOException e) {
+            System.out.println("An error occurred while writing to the file: " + e.getMessage());
+        }
+
+        String variableFilePath = Paths.get(getBasePathOrCreate(basePath), toDTCamelCase(config.getAppName()) + "ApiPostVariable.json").toString();
+        // 写入文件
+        try (FileWriter writer = new FileWriter(variableFilePath)) {
+            writer.write(JSONObject.toJSONString(variable));
             log.info("The apipost generate complete. count = '{}' filePath = {}", count, filePath);
         } catch (IOException e) {
             System.out.println("An error occurred while writing to the file: " + e.getMessage());

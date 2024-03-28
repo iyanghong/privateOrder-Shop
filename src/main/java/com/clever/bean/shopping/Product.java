@@ -17,7 +17,7 @@ import java.math.BigDecimal;
  * 商品
  *
  * @Author xixi
- * @Date 2024-03-27 11:46:50
+ * @Date 2024-03-28 09:00:55
  */
 public class Product implements Serializable {
 

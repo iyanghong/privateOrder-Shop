@@ -1,6 +1,7 @@
 package com.clever.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.clever.bean.shopping.projo.output.ProductCategoryTreeVO;
 import com.clever.util.SpringUtil;
 import com.clever.annotation.Auth;
 import com.clever.annotation.AuthGroup;
@@ -31,6 +32,11 @@ public class ProductCategoryController {
     @Resource
     private ProductCategoryService productCategoryService;
 
+    @GetMapping("/tree")
+    @Auth(value = "clever-shopping.productCategory.tree", name = "商品分类树型数据", description = "商品分类树型数据接口")
+    public Result<List<ProductCategoryTreeVO>> selectTreeList(){
+        return new Result<>(productCategoryService.selectTreeList(),"查询成功");
+    }
 
     /**
      * 分页查询商品分类列表

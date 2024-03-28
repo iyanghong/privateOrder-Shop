@@ -1,7 +1,7 @@
 package com.clever.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.clever.bean.shopping.projo.output.CartProductDetailOutput;
+import com.clever.bean.shopping.projo.output.CartProductDetailVO;
 import org.apache.ibatis.annotations.Mapper;
 import com.clever.bean.shopping.Cart;
 
@@ -23,7 +23,7 @@ public interface CartMapper extends BaseMapper<Cart> {
      * @param userId 用户id
      * @return List<CartProductDetailOutput>
      */
-    List<CartProductDetailOutput> selectCartProductDetailByUserId(String userId);
+    List<CartProductDetailVO> selectCartProductDetailByUserId(String userId);
 
     /**
      * 获取购物车商品详情
@@ -31,5 +31,5 @@ public interface CartMapper extends BaseMapper<Cart> {
      * @param ids 购物车id列表
      * @return List<CartProductDetailOutput>
      */
-    List<CartProductDetailOutput> selectCartProductDetailByCartIds(List<String> ids);
+    List<CartProductDetailVO> selectCartProductDetailByCartIds(List<String> ids);
 }

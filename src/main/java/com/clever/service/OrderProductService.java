@@ -6,6 +6,7 @@ import com.clever.bean.model.OnlineUser;
 import java.util.List;
 
 import com.clever.bean.shopping.OrderProduct;
+import com.clever.bean.shopping.projo.output.OrderProductDetailVO;
 
 /**
  * 订单商品服务接口
@@ -48,7 +49,7 @@ public interface OrderProductService {
      * @param orderIds 订单id列表
      * @return List<OrderProduct> 订单商品列表
      */
-    List<OrderProduct> selectListByOrderIds(List<String> orderIds);
+    List<OrderProductDetailVO> selectDetailListByOrderIds(List<String> orderIds);
 
     /**
      * 根据商品id获取列表

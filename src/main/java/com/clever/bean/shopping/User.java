@@ -8,14 +8,14 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import java.math.BigDecimal;
 import java.util.Date;
+import java.math.BigDecimal;
 
 /**
  * 用户
  *
  * @Author xixi
- * @Date 2024-03-26 17:10:17
+ * @Date 2024-03-28 09:00:55
  */
 public class User implements Serializable {
 
@@ -48,9 +48,9 @@ public class User implements Serializable {
      */
     private String avatar;
     /**
-     * 用户类型 0:普通用户 1:商家
+     * 用户类型:0-普通用户,1-商家
      */
-    @NotNull(message = "用户类型 0不能为空")
+    @NotNull(message = "用户类型不能为空")
     private Integer type;
     /**
      * 手机号
@@ -149,7 +149,7 @@ public class User implements Serializable {
     }
 
     /**
-     * 用户类型 0:普通用户 1:商家
+     * 用户类型:0-普通用户,1-商家
      */
     public Integer getType() {
         return type;
@@ -235,5 +235,4 @@ public class User implements Serializable {
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
-
 }

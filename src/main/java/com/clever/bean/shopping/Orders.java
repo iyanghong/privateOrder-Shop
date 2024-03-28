@@ -8,14 +8,14 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import java.math.BigDecimal;
 import java.util.Date;
+import java.math.BigDecimal;
 
 /**
  * 订单
  *
  * @Author xixi
- * @Date 2024-03-26 17:10:17
+ * @Date 2024-03-28 09:00:55
  */
 public class Orders implements Serializable {
 
@@ -36,12 +36,12 @@ public class Orders implements Serializable {
     /**
      * 订单总价
      */
-    @NotBlank(message = "订单总价不能为空")
+    @NotNull(message = "订单总价不能为空")
     private BigDecimal totalPrice;
     /**
-     * 订单状态 0:未支付 1:已支付 2:已发货 3:已收货 4:已取消
+     * 订单状态:0-未支付,1-已支付,2-已发货,3-已收货,4-已取消
      */
-    @NotNull(message = "订单状态")
+    @NotNull(message = "订单状态不能为空")
     private Integer status;
     /**
      * 创建时间
@@ -98,7 +98,7 @@ public class Orders implements Serializable {
     }
 
     /**
-     * 订单状态 0:未支付 1:已支付 2:已发货 3:已收货 4:已评价 5:已取消
+     * 订单状态:0-未支付,1-已支付,2-已发货,3-已收货,4-已取消
      */
     public Integer getStatus() {
         return status;

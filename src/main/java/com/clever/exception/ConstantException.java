@@ -60,4 +60,5 @@ public class ConstantException {
     public static ConstantException INSUFFICIENT_INVENTORY_GOODS = new ConstantException(3004, "%s商品库存不足");
     public static ConstantException FILE_UPLOAD_FAIL = new ConstantException(3005, "文件上传失败");
     public static ConstantException FILE_VIEW_FAIL = new ConstantException(3006, "文件访问错误");
+    public static ConstantException ORDER_STATUS_ERROR = new ConstantException(3007, "订单状态异常");
 }

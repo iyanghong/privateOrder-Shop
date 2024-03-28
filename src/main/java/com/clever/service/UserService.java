@@ -146,4 +146,18 @@ public interface UserService {
      * @param onlineUser 当前登录用户
      */
     void recharge(BigDecimal amount, OnlineUser onlineUser);
+
+    /**
+     * 扣款
+     * @param amount 金额
+     * @param userId 用户id
+     */
+    void deduction(BigDecimal amount,String userId);
+    /**
+     * 退款
+     * @param amount 金额
+     * @param userId 用户id
+     */
+    void refund(BigDecimal amount,String userId);
+
 }

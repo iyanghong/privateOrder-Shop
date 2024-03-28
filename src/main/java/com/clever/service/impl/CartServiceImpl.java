@@ -3,7 +3,7 @@ package com.clever.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.clever.bean.model.OnlineUser;
-import com.clever.bean.shopping.projo.output.CartProductDetailOutput;
+import com.clever.bean.shopping.projo.output.CartProductDetailVO;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -89,12 +89,26 @@ public class CartServiceImpl implements CartService {
     /**
      * 新建购物车
      *
-     * @param cart       购物车实体信息
-     * @param onlineUser 当前登录用户
+     * @param productId     商品id
+     * @param quantity      商品数量
+     * @param selectedParam 商品规格
+     * @param onlineUser    当前登录用户
      * @return Cart 新建后的购物车信息
      */
     @Override
-    public Cart create(Cart cart, OnlineUser onlineUser) {
+    public Cart create(String productId, Integer quantity, String selectedParam, OnlineUser onlineUser) {
+        Cart checkCart = cartMapper.selectOne(new QueryWrapper<Cart>().eq("user_id", onlineUser.getId()).eq("product_id", productId).eq("selected_param", selectedParam));
+        if (checkCart != null) {
+            checkCart.setQuantity(checkCart.getQuantity() + quantity);
+            cartMapper.updateById(checkCart);
+            log.info("购物车, 购物车信息修改成功: userId={}, cartId={}", onlineUser.getId(), checkCart.getId());
+            return checkCart;
+        }
+        Cart cart = new Cart();
+        cart.setUserId(onlineUser.getId());
+        cart.setProductId(productId);
+        cart.setSelectedParam(selectedParam);
+        cart.setQuantity(quantity);
         cartMapper.insert(cart);
         log.info("购物车, 购物车信息创建成功: userId={}, cartId={}", onlineUser.getId(), cart.getId());
         return cart;
@@ -112,21 +126,6 @@ public class CartServiceImpl implements CartService {
         cartMapper.updateById(cart);
         log.info("购物车, 购物车信息修改成功: userId={}, cartId={}", onlineUser.getId(), cart.getId());
         return cart;
-    }
-
-    /**
-     * 保存购物车
-     *
-     * @param cart       购物车实体信息
-     * @param onlineUser 当前登录用户
-     * @return Cart 保存后的购物车信息
-     */
-    @Override
-    public Cart save(Cart cart, OnlineUser onlineUser) {
-        if (StringUtils.isNotBlank(cart.getId())) {
-            return create(cart, onlineUser);
-        }
-        return update(cart, onlineUser);
     }
 
     /**
@@ -178,12 +177,12 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public List<CartProductDetailOutput> selectCartProductDetailByUserId(String userId) {
+    public List<CartProductDetailVO> selectCartProductDetailByUserId(String userId) {
         return cartMapper.selectCartProductDetailByUserId(userId);
     }
 
     @Override
-    public List<CartProductDetailOutput> selectCartProductDetailByCartIds(List<String> ids) {
+    public List<CartProductDetailVO> selectCartProductDetailByCartIds(List<String> ids) {
         if (ids == null || ids.isEmpty()) {
             return new ArrayList<>();
         }

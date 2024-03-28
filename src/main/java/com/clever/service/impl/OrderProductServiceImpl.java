@@ -3,6 +3,7 @@ package com.clever.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.clever.bean.model.OnlineUser;
+import com.clever.bean.shopping.projo.output.OrderProductDetailVO;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,8 +81,8 @@ public class OrderProductServiceImpl implements OrderProductService {
      * @return List<OrderProduct> 订单商品列表
      */
     @Override
-    public List<OrderProduct> selectListByOrderIds(List<String> orderIds) {
-        return orderProductMapper.selectList(new QueryWrapper<OrderProduct>().in("order_id", orderIds).orderByAsc("id"));
+    public List<OrderProductDetailVO> selectDetailListByOrderIds(List<String> orderIds) {
+        return orderProductMapper.selectDetailListByOrderIds(orderIds);
     }
 
     /**

@@ -3,6 +3,7 @@ package com.clever.util;
 import com.clever.bean.model.OnlineUser;
 import com.clever.exception.BaseException;
 import com.clever.exception.ConstantException;
+import com.clever.mapper.UserMapper;
 import com.clever.service.UserService;
 import com.clever.service.impl.UserServiceImpl;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -10,6 +11,7 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
@@ -88,12 +90,11 @@ public class SpringUtil {
         if (requestAttributes != null) {
             OnlineUser onlineUser = (OnlineUser) requestAttributes.getAttribute("online", RequestAttributes.SCOPE_REQUEST);
             if (onlineUser != null) {
-                if (onlineUser.getUsername() == null || onlineUser.getUsername().isEmpty()) {
-                    UserService userService = new UserServiceImpl();
-                    OnlineUser newOnlineUser = new OnlineUser(userService.selectById(onlineUser.getId()), onlineUser.getToken());
+                /*if (onlineUser.getUsername() == null || onlineUser.getUsername().isEmpty()) {
+                    OnlineUser newOnlineUser = new OnlineUser(userMapper.selectById(onlineUser.getId()), onlineUser.getToken());
                     requestAttributes.setAttribute("online", newOnlineUser, RequestAttributes.SCOPE_REQUEST);
                     return newOnlineUser;
-                }
+                }*/
 
                 return onlineUser;
             }
@@ -127,12 +128,10 @@ public class SpringUtil {
     }
 
 
-
     public static HttpServletResponse getResponse() {
-        HttpServletResponse response=((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
+        HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
         return response;
     }
-
 
 
 }

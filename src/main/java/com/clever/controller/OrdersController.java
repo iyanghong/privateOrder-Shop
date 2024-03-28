@@ -1,14 +1,17 @@
 package com.clever.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.clever.bean.shopping.projo.output.OrdersDetailOutput;
+import com.clever.bean.shopping.projo.output.OrderDetailVO;
+import com.clever.bean.shopping.projo.output.OrdersDetailVO;
 import com.clever.util.SpringUtil;
 import com.clever.annotation.Auth;
 import com.clever.annotation.AuthGroup;
 import com.clever.bean.model.OnlineUser;
 import com.clever.bean.model.Result;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.clever.bean.shopping.Orders;
 import com.clever.service.OrdersService;
@@ -16,6 +19,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * 订单接口
@@ -39,13 +44,27 @@ public class OrdersController {
      * @param pageNumber 页码
      * @param pageSize   每页记录数
      * @param userId     用户id
-     * @param status     订单状态 0:未支付 1:已支付 2:已发货 3:已收货 4:已评价 5:已取消
+     * @param status     订单状态:0-未支付,1-已支付,2-已发货,3-已收货,4-已取消,5-已退款
      * @return 当前页数据
      */
     @GetMapping("/page/{pageNumber}/{pageSize}")
     @Auth(value = "clever-shopping.orders.page", name = "订单分页", description = "订单分页接口")
-    public Result<Page<OrdersDetailOutput>> selectPage(@PathVariable("pageNumber") Integer pageNumber, @PathVariable("pageSize") Integer pageSize, String userId, Integer status) {
+    public Result<Page<OrdersDetailVO>> selectPage(@PathVariable("pageNumber") Integer pageNumber, @PathVariable("pageSize") Integer pageSize, String userId, Integer status) {
         return new Result<>(ordersService.selectPage(pageNumber, pageSize, userId, status), "分页数据查询成功");
+    }
+
+    /**
+     * 我的订单(分页查询订单列表)
+     *
+     * @param pageNumber 页码
+     * @param pageSize   每页记录数
+     * @param status     订单状态:0-未支付,1-已支付,2-已发货,3-已收货,4-已取消,5-已退款
+     * @return 当前页数据
+     */
+    @GetMapping("/my/{pageNumber}/{pageSize}")
+    @Auth(value = "clever-shopping.orders.page", name = "订单分页", description = "订单分页接口")
+    public Result<Page<OrdersDetailVO>> selectPage(@PathVariable("pageNumber") Integer pageNumber, @PathVariable("pageSize") Integer pageSize, Integer status) {
+        return new Result<>(ordersService.selectPage(pageNumber, pageSize, SpringUtil.getOnlineUser().getId(), status), "分页数据查询成功");
     }
 
     /**
@@ -68,7 +87,7 @@ public class OrdersController {
      */
     @GetMapping("/{id}")
     @Auth(value = "clever-system.orders.selectById", name = "根据订单id获取订单信息", description = "根据订单id获取订单信息接口")
-    public Result<Orders> selectById(@PathVariable("id") String id) {
+    public Result<OrderDetailVO> selectById(@PathVariable("id") String id) {
         return new Result<>(ordersService.selectById(id), "查询成功");
     }
 
@@ -80,9 +99,45 @@ public class OrdersController {
      */
     @PostMapping("")
     @Auth(value = "clever-shopping.orders.create", name = "创建订单", description = "创建订单信息接口")
-    public Result<Orders> create(@Validated List<String> cartIds) {
+    public Result<Orders> create(@NotNull(message = "请选择商品") String cartIds) {
         OnlineUser onlineUser = SpringUtil.getOnlineUser();
-        return new Result<>(ordersService.create(cartIds, onlineUser), "下单成功");
+        return new Result<>(ordersService.create(Arrays.stream(cartIds.split(",")).collect(Collectors.toList()), onlineUser), "下单成功");
+    }
+
+
+    /**
+     * 订单支付
+     *
+     * @param orderId 订单id
+     * @return String
+     */
+    @PostMapping("/pay/{orderId}")
+    public Result<String> pay(@NotBlank(message = "请选择要支付的订单") @PathVariable("orderId") String orderId) {
+        ordersService.pay(orderId, SpringUtil.getOnlineUser());
+        return Result.ofSuccess("支付成功");
+    }
+    /**
+     * 取消订单
+     *
+     * @param orderId 订单id
+     * @return String
+     */
+    @PostMapping("/cancel/{orderId}")
+    public Result<String> cancel(@NotBlank(message = "请选择要取消的订单") @PathVariable("orderId") String orderId) {
+        ordersService.cancel(orderId, SpringUtil.getOnlineUser());
+        return Result.ofSuccess("取消订单成功");
+    }
+
+    /**
+     * 退款
+     *
+     * @param orderId 订单id
+     * @return String
+     */
+    @PostMapping("/refund/{orderId}")
+    public Result<String> refund(@NotBlank(message = "请选择要退款的订单") @PathVariable("orderId") String orderId) {
+        ordersService.refund(orderId, SpringUtil.getOnlineUser());
+        return Result.ofSuccess("退款成功");
     }
 
     /**

@@ -6,6 +6,7 @@ import com.clever.bean.model.OnlineUser;
 import java.util.List;
 
 import com.clever.bean.shopping.ProductCategory;
+import com.clever.bean.shopping.projo.output.ProductCategoryTreeVO;
 
 /**
  * 商品分类服务接口
@@ -108,5 +109,13 @@ public interface ProductCategoryService {
      * @param onlineUser 当前登录用户
      */
     void deleteByCreator(String creator, OnlineUser onlineUser);
+
+
+    /**
+     * 查询树形列表
+     *
+     * @return List<ProductCategoryTreeVO> 商品分类树形列表
+     */
+    List<ProductCategoryTreeVO> selectTreeList();
 
 }

@@ -1,8 +1,11 @@
 package com.clever.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.clever.bean.shopping.projo.output.OrderProductDetailVO;
 import org.apache.ibatis.annotations.Mapper;
 import com.clever.bean.shopping.OrderProduct;
+
+import java.util.List;
 
 
 /**
@@ -14,4 +17,5 @@ import com.clever.bean.shopping.OrderProduct;
 @Mapper
 public interface OrderProductMapper extends BaseMapper<OrderProduct> {
 
+    List<OrderProductDetailVO> selectDetailListByOrderIds(List<String> orderIds);
 }

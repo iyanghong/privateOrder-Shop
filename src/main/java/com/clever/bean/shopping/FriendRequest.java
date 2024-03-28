@@ -14,7 +14,7 @@ import java.util.Date;
  * 好友申请
  *
  * @Author xixi
- * @Date 2024-03-27 17:36:54
+ * @Date 2024-03-28 09:00:55
  */
 public class FriendRequest implements Serializable {
 

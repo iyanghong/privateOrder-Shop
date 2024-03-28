@@ -12,17 +12,17 @@ import java.util.List;
  * @Author xixi
  * @Date 2024-03-27 16:14
  **/
-public class OrdersDetailOutput extends Orders implements Serializable {
+public class OrdersDetailVO extends Orders implements Serializable {
     /**
      * 订单商品列表
      */
-    private List<OrderProduct> orderProductList;
+    private List<OrderProductDetailVO> orderProductList;
 
-    public List<OrderProduct> getOrderProductList() {
+    public List<OrderProductDetailVO> getOrderProductList() {
         return orderProductList;
     }
 
-    public void setOrderProductList(List<OrderProduct> orderProductList) {
+    public void setOrderProductList(List<OrderProductDetailVO> orderProductList) {
         this.orderProductList = orderProductList;
     }
 }

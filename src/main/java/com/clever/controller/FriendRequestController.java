@@ -1,6 +1,7 @@
 package com.clever.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.clever.bean.shopping.projo.output.FriendRequestDetailVO;
 import com.clever.util.SpringUtil;
 import com.clever.annotation.Auth;
 import com.clever.annotation.AuthGroup;
@@ -15,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.constraints.NotBlank;
 
 /**
  * 好友申请接口
@@ -30,6 +32,46 @@ public class FriendRequestController {
 
     @Resource
     private FriendRequestService friendRequestService;
+
+
+    @GetMapping("/my")
+    public Result<List<FriendRequestDetailVO>> my() {
+        return new Result<>(friendRequestService.selectFriendRequestDetailListByUserId(SpringUtil.getOnlineUser().getId()), "查询成功");
+    }
+
+    /**
+     * 发送好友申请
+     *
+     * @param userId  用户id
+     * @param message 申请消息
+     */
+    @PostMapping("/request")
+    public Result<String> request(@NotBlank(message = "请输入用户id") String userId, String message) {
+        friendRequestService.request(userId, message);
+        return Result.ofSuccess("发送成功");
+    }
+
+    /**
+     * 同意好友申请
+     *
+     * @param id 好友申请id
+     */
+    @PostMapping("/agree/{id}")
+    public Result<String> agree(@NotBlank(message = "id") @PathVariable("id") String id) {
+        friendRequestService.agree(id);
+        return Result.ofSuccess("同意成功");
+    }
+
+    /**
+     * 拒绝好友申请
+     *
+     * @param id 好友申请id
+     */
+    @PostMapping("/refuse/{id}")
+    public Result<String> refuse(@NotBlank(message = "id") @PathVariable("id") String id) {
+        friendRequestService.refuse(id);
+        return Result.ofSuccess("拒绝请求成功");
+    }
 
 
     /**

@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.clever.mapper.CartMapper">
     <select id="selectCartProductDetailByUserId"
-            resultType="com.clever.bean.shopping.projo.output.CartProductDetailOutput">
+            resultType="com.clever.bean.shopping.projo.output.CartProductDetailVO">
         SELECT c.*,
                p.NAME          as productName,
                p.description      productDescription,
@@ -18,7 +18,7 @@
     </select>
 
     <select id="selectCartProductDetailByCartIds"
-            resultType="com.clever.bean.shopping.projo.output.CartProductDetailOutput">
+            resultType="com.clever.bean.shopping.projo.output.CartProductDetailVO">
         SELECT
         c.*,
         p.NAME as productName,

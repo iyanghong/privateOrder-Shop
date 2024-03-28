@@ -3,7 +3,9 @@ package com.clever.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.clever.bean.model.OnlineUser;
-import com.clever.bean.shopping.projo.output.FriendDetailOutput;
+import com.clever.bean.shopping.FriendRequest;
+import com.clever.bean.shopping.projo.output.FriendDetailVO;
+import com.clever.bean.shopping.projo.output.FriendRequestDetailVO;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,7 +72,7 @@ public class FriendServiceImpl implements FriendService {
      * @return List<Friend> 好友列表
      */
     @Override
-    public List<FriendDetailOutput> selectMyFriend(String userId) {
+    public List<FriendDetailVO> selectMyFriend(String userId) {
         return friendMapper.selectFriendDetailListByUserId(userId);
     }
 
@@ -175,4 +177,6 @@ public class FriendServiceImpl implements FriendService {
         friendMapper.delete(new QueryWrapper<Friend>().eq("friend_id", friendId));
         log.info("好友, 好友信息根据friendId删除成功: userId={}, friendId={}", onlineUser.getId(), friendId);
     }
+
+
 }

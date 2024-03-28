@@ -10,7 +10,7 @@ spring:
     datacenterId: 1
     defaultOnlineUserId: 12
     ### 文件上传位置
-    uploadPath: "E:\\upload\\test"
+    uploadPath: "D:\\upload"
   devtools:
     restart:
       enabled: true

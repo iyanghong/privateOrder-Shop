@@ -1,7 +1,7 @@
 package com.clever.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.clever.bean.shopping.projo.output.FriendDetailOutput;
+import com.clever.bean.shopping.projo.output.FriendDetailVO;
 import org.apache.ibatis.annotations.Mapper;
 import com.clever.bean.shopping.Friend;
 
@@ -16,5 +16,5 @@ import java.util.List;
  */
 @Mapper
 public interface FriendMapper extends BaseMapper<Friend> {
-    List<FriendDetailOutput> selectFriendDetailListByUserId(String userId);
+    List<FriendDetailVO> selectFriendDetailListByUserId(String userId);
 }

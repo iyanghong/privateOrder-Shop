@@ -1,14 +1,17 @@
 package com.clever.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.clever.bean.model.OnlineUser;
+import com.clever.bean.shopping.projo.output.ProductCategoryTreeVO;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.clever.mapper.ProductCategoryMapper;
 import com.clever.bean.shopping.ProductCategory;
@@ -93,6 +96,9 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
      */
     @Override
     public ProductCategory create(ProductCategory productCategory, OnlineUser onlineUser) {
+        if (productCategory.getParentId().isEmpty()){
+            productCategory.setParentId("-1");
+        }
         productCategoryMapper.insert(productCategory);
         log.info("商品分类, 商品分类信息创建成功: userId={}, productCategoryId={}", onlineUser.getId(), productCategory.getId());
         return productCategory;
@@ -173,5 +179,31 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     public void deleteByCreator(String creator, OnlineUser onlineUser) {
         productCategoryMapper.delete(new QueryWrapper<ProductCategory>().eq("creator", creator));
         log.info("商品分类, 商品分类信息根据creator删除成功: userId={}, creator={}", onlineUser.getId(), creator);
+    }
+
+    /**
+     * 查询树形列表
+     *
+     * @return List<ProductCategoryTreeVO> 商品分类树形列表
+     */
+    @Override
+    public List<ProductCategoryTreeVO> selectTreeList() {
+        return selectTreeListRecursion("-1");
+    }
+
+    /**
+     * 查询树形列表 递归主函数
+     * @param parentId 父级分类id
+     * @return List<ProductCategoryTreeVO> 商品分类树形列表
+     */
+    private List<ProductCategoryTreeVO> selectTreeListRecursion(String parentId) {
+        List<ProductCategory> productCategoryList = productCategoryMapper.selectList(new QueryWrapper<ProductCategory>().eq("parent_id", parentId).orderByAsc("sort_no"));
+        List<ProductCategoryTreeVO> list = productCategoryList.stream().map(productCategory -> {
+            ProductCategoryTreeVO productCategoryTreeVO = new ProductCategoryTreeVO();
+            BeanUtil.copyProperties(productCategory, productCategoryTreeVO);
+            productCategoryTreeVO.setChildren(selectTreeListRecursion(productCategoryTreeVO.getId()));
+            return productCategoryTreeVO;
+        }).collect(Collectors.toList());
+        return list;
     }
 }

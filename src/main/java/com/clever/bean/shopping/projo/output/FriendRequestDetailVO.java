@@ -6,7 +6,7 @@ import com.clever.bean.shopping.FriendRequest;
  * @Author xixi
  * @Date 2024-03-27 17:37
  **/
-public class FriendRequestDetailOutput extends FriendRequest {
+public class FriendRequestDetailVO extends FriendRequest {
 
     /**
      * 用户名

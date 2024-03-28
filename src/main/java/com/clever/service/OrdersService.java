@@ -6,7 +6,8 @@ import com.clever.bean.model.OnlineUser;
 import java.util.List;
 
 import com.clever.bean.shopping.Orders;
-import com.clever.bean.shopping.projo.output.OrdersDetailOutput;
+import com.clever.bean.shopping.projo.output.OrderDetailVO;
+import com.clever.bean.shopping.projo.output.OrdersDetailVO;
 
 /**
  * 订单服务接口
@@ -25,7 +26,7 @@ public interface OrdersService {
      * @param status     订单状态 0:未支付 1:已支付 2:已发货 3:已收货 4:已评价 5:已取消
      * @return Page<Orders>
      */
-    Page<OrdersDetailOutput> selectPage(Integer pageNumber, Integer pageSize, String userId, Integer status);
+    Page<OrdersDetailVO> selectPage(Integer pageNumber, Integer pageSize, String userId, Integer status);
 
     /**
      * 根据订单id获取订单
@@ -33,7 +34,7 @@ public interface OrdersService {
      * @param id 订单id
      * @return Orders 订单id信息
      */
-    Orders selectById(String id);
+    OrderDetailVO selectById(String id);
 
     /**
      * 根据用户id获取列表
@@ -51,7 +52,12 @@ public interface OrdersService {
      * @return Orders 新建后的订单信息
      */
     Orders create(List<String> cartIds, OnlineUser onlineUser);
-
+    /**
+     * 订单支付
+     * @param oderId 订单号
+     * @param onlineUser 当前登录用户
+     */
+    void pay(String oderId, OnlineUser onlineUser);
     /**
      * 修改订单
      *
@@ -94,4 +100,18 @@ public interface OrdersService {
      */
     void deleteByUserId(String userId, OnlineUser onlineUser);
 
+    /**
+     * 取消订单
+     *
+     * @param orderId    订单id
+     * @param onlineUser 当前登录用户
+     */
+    void cancel(String orderId, OnlineUser onlineUser);
+    /**
+     * 退款
+     *
+     * @param orderId    订单id
+     * @param onlineUser 当前登录用户
+     */
+    void refund(String orderId, OnlineUser onlineUser);
 }

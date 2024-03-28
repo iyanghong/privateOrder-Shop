@@ -3,4 +3,23 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.clever.mapper.OrderProductMapper">
 
+    <select id="selectDetailListByOrderIds" resultType="com.clever.bean.shopping.projo.output.OrderProductDetailVO">
+        SELECT
+            o.*,
+            p.name AS productName,
+            p.description productDescription,
+            p.price AS productPrice,
+            p.stock AS productStock,
+            p.status AS productStatus,
+            p.specification AS productParam,
+            p.img_url AS productParamImage
+        FROM
+            order_product o
+                LEFT JOIN product p ON o.product_id = p.id
+        where o.order_id in(
+        <foreach collection="orderIds" item="id" separator=",">
+            #{id}
+        </foreach>
+        )
+    </select>
 </mapper>

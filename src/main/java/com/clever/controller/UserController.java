@@ -8,6 +8,7 @@ import com.clever.annotation.AuthGroup;
 import com.clever.bean.model.OnlineUser;
 import com.clever.bean.model.Result;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.clever.bean.shopping.User;
@@ -16,7 +17,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * 用户接口
@@ -33,15 +36,38 @@ public class UserController {
     @Resource
     private UserService userService;
 
-
-    @PostMapping("/login")
-    public Result<OnlineUser> login(@NotBlank(message = "账户不能为空") String account,@NotBlank(message = "密码不能为空") String password) {
-        return new Result<>(userService.login(account, password),"登录成功");
+    /**
+     * 充值
+     * @param amount 金额
+     * @return Result<String>
+     */
+    @PostMapping("/recharge")
+    public Result<String> recharge(@NotNull(message = "请输入充值金额") @Min(value = 1,message = "充值金额不能小于0") BigDecimal amount){
+        OnlineUser onlineUser = SpringUtil.getOnlineUser();
+        userService.recharge(amount, onlineUser);
+        return Result.ofSuccess("充值成功");
     }
+    @PostMapping("/login")
+    public Result<OnlineUser> login(@NotBlank(message = "账户不能为空") String account, @NotBlank(message = "密码不能为空") String password) {
+        return new Result<>(userService.login(account, password), "登录成功");
+    }
+
     @PostMapping("/register")
     public Result<User> register(@Validated UserRegisterInput userRegisterInput) {
-        return new Result<>(userService.register(userRegisterInput),"注册成功");
+        return new Result<>(userService.register(userRegisterInput), "注册成功");
     }
+
+    /**
+     * 获取当前登录用户信息
+     * @return Result<OnlineUser>
+     */
+    @GetMapping("/getCurrentUser")
+    public Result<OnlineUser> getCurrentUser(){
+        OnlineUser onlineUser = SpringUtil.getOnlineUser();
+        User user = userService.selectById(onlineUser.getId());
+        return new Result<>(new OnlineUser(user,onlineUser.getToken()));
+    }
+
     /**
      * 分页查询用户列表
      *

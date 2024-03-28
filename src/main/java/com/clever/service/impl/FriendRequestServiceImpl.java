@@ -3,6 +3,10 @@ package com.clever.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.clever.bean.model.OnlineUser;
+import com.clever.bean.shopping.Friend;
+import com.clever.bean.shopping.projo.output.FriendRequestDetailVO;
+import com.clever.service.FriendService;
+import com.clever.util.SpringUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +33,66 @@ public class FriendRequestServiceImpl implements FriendRequestService {
 
     @Resource
     private FriendRequestMapper friendRequestMapper;
+
+    @Resource
+    private FriendService friendService;
+
+    /**
+     * 发送好友申请
+     *
+     * @param userId  用户id
+     * @param message 申请消息
+     */
+    @Override
+    public void request(String userId, String message) {
+        OnlineUser onlineUser = SpringUtil.getOnlineUser();
+        FriendRequest friendRequest = friendRequestMapper.selectOne(new QueryWrapper<FriendRequest>().eq("friend_id", userId).eq("user_id", onlineUser.getId()));
+        if (friendRequest != null) {
+            log.info("好友申请, 好友申请信息已存在: userId={}, friendId={}", userId, onlineUser.getId());
+            return;
+        }
+        FriendRequest newFriendRequest = new FriendRequest();
+        newFriendRequest.setFriendId(userId);
+        newFriendRequest.setUserId(onlineUser.getId());
+        newFriendRequest.setStatus(0);
+        newFriendRequest.setMessage(message);
+        friendRequestMapper.insert(newFriendRequest);
+        log.info("好友申请, 好友申请信息发送成功: userId={}, friendId={}", onlineUser.getId(), userId);
+    }
+
+    /**
+     * 同意好友申请
+     *
+     * @param id 好友申请id
+     */
+    @Override
+    public void agree(String id) {
+        FriendRequest friendRequest = friendRequestMapper.selectById(id);
+        friendRequest.setStatus(1);
+        friendRequestMapper.updateById(friendRequest);
+        Friend friend = new Friend();
+        friend.setFriendId(friendRequest.getFriendId());
+        friend.setUserId(friendRequest.getUserId());
+        friendService.create(friend, SpringUtil.getOnlineUser());
+        log.info("好友申请, 好友申请信息同意成功: userId={}, friendRequestId={}", SpringUtil.getOnlineUser().getId(), id);
+    }
+
+    /**
+     * 拒绝好友申请
+     *
+     * @param id 好友申请id
+     */
+    @Override
+    public void refuse(String id) {
+        FriendRequest friendRequest = friendRequestMapper.selectById(id);
+        friendRequest.setStatus(2);
+        friendRequestMapper.updateById(friendRequest);
+        log.info("好友申请, 好友申请信息拒绝成功: userId={}, friendRequestId={}", SpringUtil.getOnlineUser().getId(), id);
+    }
+
+    public List<FriendRequestDetailVO> selectFriendRequestDetailListByUserId(String userId) {
+        return friendRequestMapper.selectFriendRequestDetailListByUserId(userId);
+    }
 
     /**
      * 分页查询好友申请列表
@@ -178,4 +242,6 @@ public class FriendRequestServiceImpl implements FriendRequestService {
         friendRequestMapper.delete(new QueryWrapper<FriendRequest>().eq("friend_id", friendId));
         log.info("好友申请, 好友申请信息根据friendId删除成功: userId={}, friendId={}", onlineUser.getId(), friendId);
     }
+
+
 }

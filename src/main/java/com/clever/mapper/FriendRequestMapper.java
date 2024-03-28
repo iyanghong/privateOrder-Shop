@@ -1,7 +1,7 @@
 package com.clever.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.clever.bean.shopping.projo.output.FriendRequestDetailOutput;
+import com.clever.bean.shopping.projo.output.FriendRequestDetailVO;
 import org.apache.ibatis.annotations.Mapper;
 import com.clever.bean.shopping.FriendRequest;
 
@@ -16,5 +16,5 @@ import java.util.List;
  */
 @Mapper
 public interface FriendRequestMapper extends BaseMapper<FriendRequest> {
-    List<FriendRequestDetailOutput> selectFriendRequestDetailListByUserId(String userId);
+    List<FriendRequestDetailVO> selectFriendRequestDetailListByUserId(String userId);
 }

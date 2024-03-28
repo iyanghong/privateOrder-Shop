@@ -3,7 +3,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.clever.mapper.FriendRequestMapper">
 
-    <select id="selectFriendRequestDetailListByUserId" resultType="com.clever.bean.shopping.projo.output.FriendRequestDetailOutput">
+    <select id="selectFriendRequestDetailListByUserId"
+            resultType="com.clever.bean.shopping.projo.output.FriendRequestDetailVO">
         SELECT f.*,
                u.username,
                u.nickname,

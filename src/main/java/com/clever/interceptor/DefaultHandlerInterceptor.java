@@ -1,5 +1,6 @@
 package com.clever.interceptor;
 
+import cn.hutool.json.JSONUtil;
 import com.auth0.jwt.interfaces.Claim;
 import com.clever.bean.model.OnlineUser;
 import com.clever.bean.shopping.User;
@@ -39,9 +40,8 @@ public class DefaultHandlerInterceptor implements HandlerInterceptor {
         if (userData == null) {
             throw new BaseException(ConstantException.TOKEN_INVALID);
         }
-        User user = new User();
-        user.setId(userData.get("id").asString());
-        OnlineUser onlineUser = new OnlineUser(user,token);
+        User user = JSONUtil.toBean(userData.get("data").asString(), User.class);
+        OnlineUser onlineUser = new OnlineUser(user, token);
         request.setAttribute("online", onlineUser);
 
         return true;

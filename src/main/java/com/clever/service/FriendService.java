@@ -6,7 +6,7 @@ import com.clever.bean.model.OnlineUser;
 import java.util.List;
 
 import com.clever.bean.shopping.Friend;
-import com.clever.bean.shopping.projo.output.FriendDetailOutput;
+import com.clever.bean.shopping.projo.output.FriendDetailVO;
 
 /**
  * 好友服务接口
@@ -41,7 +41,7 @@ public interface FriendService {
      * @param userId 用户id
      * @return List<Friend> 好友列表
      */
-    List<FriendDetailOutput> selectMyFriend(String userId);
+    List<FriendDetailVO> selectMyFriend(String userId);
 
     /**
      * 根据好友id获取列表

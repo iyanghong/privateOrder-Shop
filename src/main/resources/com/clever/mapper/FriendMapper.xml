@@ -3,19 +3,17 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.clever.mapper.FriendMapper">
 
-    <select id="selectFriendDetailListByUserId" resultType="com.clever.bean.shopping.projo.output.FriendDetailOutput">
-        SELECT
-            f.*,
-            u.username,
-            u.nickname,
-            u.gender,
-            u.avatar,
-            u.type,
-            u.phone,
-            u.email
-        FROM
-            friend f
-                LEFT JOIN user u ON f.user_id = u.id
+    <select id="selectFriendDetailListByUserId" resultType="com.clever.bean.shopping.projo.output.FriendDetailVO">
+        SELECT f.*,
+               u.username,
+               u.nickname,
+               u.gender,
+               u.avatar,
+               u.type,
+               u.phone,
+               u.email
+        FROM friend f
+                 LEFT JOIN user u ON f.user_id = u.id
         where f.user_id = #{userId}
     </select>
 </mapper>

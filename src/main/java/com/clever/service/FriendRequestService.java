@@ -6,6 +6,7 @@ import com.clever.bean.model.OnlineUser;
 import java.util.List;
 
 import com.clever.bean.shopping.FriendRequest;
+import com.clever.bean.shopping.projo.output.FriendRequestDetailVO;
 
 /**
  * 好友申请服务接口
@@ -15,6 +16,26 @@ import com.clever.bean.shopping.FriendRequest;
  */
 public interface FriendRequestService {
 
+    /**
+     * 发送好友申请
+     *
+     * @param userId  用户id
+     * @param message 申请消息
+     */
+    void request(String userId, String message);
+
+    /**
+     * 同意好友申请
+     *
+     * @param id 好友申请id
+     */
+    void agree(String id);
+    /**
+     * 拒绝好友申请
+     *
+     * @param id 好友申请id
+     */
+    void refuse(String id);
     /**
      * 分页查询列表
      *
@@ -109,5 +130,5 @@ public interface FriendRequestService {
      * @param onlineUser 当前登录用户
      */
     void deleteByFriendId(String friendId, OnlineUser onlineUser);
-
+    List<FriendRequestDetailVO> selectFriendRequestDetailListByUserId(String userId);
 }

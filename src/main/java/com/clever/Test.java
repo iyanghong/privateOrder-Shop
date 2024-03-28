@@ -24,7 +24,7 @@ public class Test {
     public static void generator() {
         // 创建一个GenerateConfig对象，用于配置数据库信息
 //        GenerateConfig generateDatabaseConfig = new GenerateConfig("jdbc:mysql://localhost:3306", "root", "Ts962464");
-        GenerateConfig generateDatabaseConfig = new GenerateConfig("jdbc:mysql://localhost:3306/shopping", "root", "Ts962464");
+        GenerateConfig generateDatabaseConfig = new GenerateConfig("jdbc:mysql://db-mysql.iyanghong.cn:58826/shopping", "root", "Ts962464");
         // 设置应用名称
         generateDatabaseConfig.setAppName("clever-shopping");
         // 设置实体类包名
@@ -37,12 +37,12 @@ public class Test {
         generateDatabaseConfig.setControllerPackageName("com.clever.controller");
 
 
-        String tableName = "friend,friend_request";
-        generateEntity(tableName, generateDatabaseConfig);
-        generateMapperXML(tableName, generateDatabaseConfig);
-        generateMapper(tableName, generateDatabaseConfig);
-        generateService(tableName, generateDatabaseConfig);
-        generateController(tableName, generateDatabaseConfig);
+        String tableName = "";
+//        generateEntity(tableName, generateDatabaseConfig);
+//        generateMapperXML(tableName, generateDatabaseConfig);
+//        generateMapper(tableName, generateDatabaseConfig);
+//        generateService(tableName, generateDatabaseConfig);
+//        generateController(tableName, generateDatabaseConfig);
         generateApiPost(generateDatabaseConfig);
     }
 

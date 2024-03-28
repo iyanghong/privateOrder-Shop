@@ -6,7 +6,7 @@ import com.clever.bean.model.OnlineUser;
 import java.util.List;
 
 import com.clever.bean.shopping.Cart;
-import com.clever.bean.shopping.projo.output.CartProductDetailOutput;
+import com.clever.bean.shopping.projo.output.CartProductDetailVO;
 
 /**
  * 购物车服务接口
@@ -54,11 +54,13 @@ public interface CartService {
     /**
      * 新建购物车
      *
-     * @param cart       购物车实体信息
+     * @param productId 商品id
+     * @param quantity 商品数量
+     * @param selectedParam 商品规格
      * @param onlineUser 当前登录用户
      * @return Cart 新建后的购物车信息
      */
-    Cart create(Cart cart, OnlineUser onlineUser);
+    Cart create(String productId, Integer quantity, String selectedParam, OnlineUser onlineUser);
 
     /**
      * 修改购物车
@@ -69,14 +71,6 @@ public interface CartService {
      */
     Cart update(Cart cart, OnlineUser onlineUser);
 
-    /**
-     * 保存购物车
-     *
-     * @param cart       购物车实体信息
-     * @param onlineUser 当前登录用户
-     * @return Cart 保存后的购物车信息
-     */
-    Cart save(Cart cart, OnlineUser onlineUser);
 
     /**
      * 根据购物车id删除信息
@@ -116,7 +110,7 @@ public interface CartService {
      * @param userId 用户id
      * @return List<CartProductDetailOutput>
      */
-    List<CartProductDetailOutput> selectCartProductDetailByUserId(String userId);
+    List<CartProductDetailVO> selectCartProductDetailByUserId(String userId);
 
     /**
      * 获取购物车商品详情
@@ -124,5 +118,5 @@ public interface CartService {
      * @param ids 购物车id列表
      * @return List<CartProductDetailOutput>
      */
-    List<CartProductDetailOutput> selectCartProductDetailByCartIds(List<String> ids);
+    List<CartProductDetailVO> selectCartProductDetailByCartIds(List<String> ids);
 }

@@ -1,17 +1,14 @@
 package com.clever.bean.shopping.projo.output;
 
-import com.clever.bean.shopping.Cart;
+import com.clever.bean.shopping.OrderProduct;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
- * 购物车商品详情
- *
  * @Author xixi
- * @Date 2024-03-27 11:36
+ * @Date 2024-03-28 10:25
  **/
-public class CartProductDetailOutput extends Cart implements Serializable {
+public class OrderProductDetailVO extends OrderProduct {
     /**
      * 商品名称
      */
@@ -41,10 +38,6 @@ public class CartProductDetailOutput extends Cart implements Serializable {
      * 商品规格
      */
     private String productParam;
-    /**
-     * 商品规格图片
-     */
-    private String productParamImage;
 
     public String getProductName() {
         return productName;
@@ -102,11 +95,5 @@ public class CartProductDetailOutput extends Cart implements Serializable {
         this.productParam = productParam;
     }
 
-    public String getProductParamImage() {
-        return productParamImage;
-    }
 
-    public void setProductParamImage(String productParamImage) {
-        this.productParamImage = productParamImage;
-    }
 }

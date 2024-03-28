@@ -311,4 +311,34 @@ public class UserServiceImpl implements UserService {
         userMapper.updateById(updateUser);
         log.info("充值，充值成功，account = {},amount = {}", onlineUser.getUsername(), amount);
     }
+
+    /**
+     * 扣款
+     *
+     * @param amount 金额
+     * @param userId 用户id
+     */
+    @Override
+    public void deduction(BigDecimal amount, String userId) {
+        User updateUser = selectById(userId);
+        updateUser.setId(userId);
+        updateUser.setMoney(updateUser.getMoney().subtract(amount));
+        userMapper.updateById(updateUser);
+        log.info("扣款，扣款成功，account = {},amount = {}", updateUser.getUsername(), amount);
+    }
+
+    /**
+     * 退款
+     *
+     * @param amount 金额
+     * @param userId 用户id
+     */
+    @Override
+    public void refund(BigDecimal amount, String userId) {
+        User updateUser = selectById(userId);
+        updateUser.setId(userId);
+        updateUser.setMoney(updateUser.getMoney().add(amount));
+        userMapper.updateById(updateUser);
+        log.info("退款，退款成功，account = {},amount = {}", updateUser.getUsername(), amount);
+    }
 }
