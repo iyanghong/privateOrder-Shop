@@ -35,9 +35,9 @@ public class WebConfigurer implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOrigins("*")
                 .allowCredentials(true)
-                .allowedMethods("GET", "POST", "DELETE", "PUT", "OPTIONS")
+                .allowedMethods("GET", "POST", "DELETE", "PUT", "OPTIONS","PATCH")
                 .allowedHeaders("*")
-                .maxAge(1800 * 30);
+                .exposedHeaders("*");
     }
 
     @Override

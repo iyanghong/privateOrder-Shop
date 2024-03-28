@@ -96,7 +96,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
      */
     @Override
     public ProductCategory create(ProductCategory productCategory, OnlineUser onlineUser) {
-        if (productCategory.getParentId().isEmpty()){
+        if (StringUtils.isBlank(productCategory.getParentId())){
             productCategory.setParentId("-1");
         }
         productCategoryMapper.insert(productCategory);
