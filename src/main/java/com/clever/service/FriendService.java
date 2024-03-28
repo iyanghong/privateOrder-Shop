@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.clever.bean.shopping.Friend;
 import com.clever.bean.shopping.projo.output.FriendDetailVO;
+import com.clever.bean.shopping.projo.output.FriendRequestDetailVO;
 
 /**
  * 好友服务接口
@@ -109,5 +110,5 @@ public interface FriendService {
      * @param onlineUser 当前登录用户
      */
     void deleteByFriendId(String friendId, OnlineUser onlineUser);
-
+    List<FriendDetailVO> selectFriendDetailListByUserId(String userId);
 }

@@ -2,6 +2,7 @@ package com.clever.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.clever.bean.shopping.projo.output.FriendDetailVO;
+import com.clever.bean.shopping.projo.output.FriendRequestDetailVO;
 import com.clever.util.SpringUtil;
 import com.clever.annotation.Auth;
 import com.clever.annotation.AuthGroup;
@@ -32,7 +33,10 @@ public class FriendController {
     @Resource
     private FriendService friendService;
 
-
+    @GetMapping("/my")
+    public Result<List<FriendDetailVO>> my() {
+        return new Result<>(friendService.selectFriendDetailListByUserId(SpringUtil.getOnlineUser().getId()), "查询成功");
+    }
     /**
      * 分页查询好友列表
      *

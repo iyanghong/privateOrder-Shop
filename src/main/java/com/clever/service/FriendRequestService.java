@@ -30,12 +30,14 @@ public interface FriendRequestService {
      * @param id 好友申请id
      */
     void agree(String id);
+
     /**
      * 拒绝好友申请
      *
      * @param id 好友申请id
      */
     void refuse(String id);
+
     /**
      * 分页查询列表
      *
@@ -130,5 +132,20 @@ public interface FriendRequestService {
      * @param onlineUser 当前登录用户
      */
     void deleteByFriendId(String friendId, OnlineUser onlineUser);
+
+    /**
+     * 查询好友申请详情列表
+     *
+     * @param userId 用户id
+     * @return List<FriendRequestDetailVO>
+     */
     List<FriendRequestDetailVO> selectFriendRequestDetailListByUserId(String userId);
+
+    /**
+     * 查询好友申请详情
+     *
+     * @param id id
+     * @return FriendRequestDetailVO
+     */
+    FriendRequestDetailVO selectFriendRequestDetail(String id);
 }

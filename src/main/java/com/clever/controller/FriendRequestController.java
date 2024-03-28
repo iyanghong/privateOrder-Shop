@@ -122,8 +122,8 @@ public class FriendRequestController {
      */
     @GetMapping("/{id}")
     @Auth(value = "clever-system.friendRequest.selectById", name = "根据好友申请id获取好友申请信息", description = "根据好友申请id获取好友申请信息接口")
-    public Result<FriendRequest> selectById(@PathVariable("id") String id) {
-        return new Result<>(friendRequestService.selectById(id), "查询成功");
+    public Result<FriendRequestDetailVO> selectById(@PathVariable("id") String id) {
+        return new Result<>(friendRequestService.selectFriendRequestDetail(id), "查询成功");
     }
 
     /**

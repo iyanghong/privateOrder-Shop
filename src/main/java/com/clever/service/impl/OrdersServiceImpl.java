@@ -181,6 +181,7 @@ public class OrdersServiceImpl implements OrdersService {
             orderProductService.create(orderProduct, onlineUser);
             // 扣除库存
             productService.reductionStock(orderProduct.getProductId(), orderProduct.getQuantity(), onlineUser);
+            cartService.delete(cartProductDetailVO.getId(), onlineUser);
         }
 
         log.info("订单, 订单信息创建成功: userId={}, ordersId={}", onlineUser.getId(), orders.getId());

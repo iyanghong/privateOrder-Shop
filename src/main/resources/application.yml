@@ -1,5 +1,5 @@
 server:
-  port: 9502
+  port: 9521
 spring:
   application:
     name: clever-shopping
@@ -10,7 +10,7 @@ spring:
     datacenterId: 1
     defaultOnlineUserId: 12
     ### 文件上传位置
-    uploadPath: "D:\\upload"
+    uploadPath: "/app/clever/shopping/upload"
   devtools:
     restart:
       enabled: true

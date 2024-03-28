@@ -178,5 +178,10 @@ public class FriendServiceImpl implements FriendService {
         log.info("好友, 好友信息根据friendId删除成功: userId={}, friendId={}", onlineUser.getId(), friendId);
     }
 
+    @Override
+    public List<FriendDetailVO> selectFriendDetailListByUserId(String userId) {
+        return friendMapper.selectFriendDetailListByUserId(userId);
+    }
+
 
 }
