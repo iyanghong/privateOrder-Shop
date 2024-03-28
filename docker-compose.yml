@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
   clever-shopping:
-    build: .
+    image: clever-shopping
     container_name: clever-shopping
     ports:
       - "9601:9601"
