@@ -94,6 +94,18 @@ public class ProductController {
     }
 
     /**
+     * 根据商品id获取商品信息
+     *
+     * @param id 商品id
+     * @return 商品信息
+     */
+    @GetMapping("/getById/{id}")
+    @Auth(value = "clever-system.product.selectById", name = "根据商品id获取商品信息", description = "根据商品id获取商品信息接口")
+    public Result<Product> getById(@PathVariable("id") String id) {
+        return new Result<>(productService.selectById(id), "查询成功");
+    }
+
+    /**
      * 创建商品信息
      *
      * @param product 商品实体信息

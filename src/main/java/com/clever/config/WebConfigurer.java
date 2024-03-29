@@ -79,7 +79,11 @@ public class WebConfigurer implements WebMvcConfigurer {
                 "/user/login",
                 "/user/register",
                 "/productCategory/tree",
-                "/product/**",
+                "/product/page/**",
+                "/product/getById/**",
+                "/product/listByCategoryId/**",
+                "/product/listByCreator/**",
+                "/product/selectHotList",
                 "/file/resource/**/**"
         );
     }
