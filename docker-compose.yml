@@ -6,4 +6,6 @@ services:
     container_name: clever-shopping
     ports:
       - "9601:9601"
+    volumes:
+      - /app/clever/shopping/upload:/app/clever/shopping/upload
     restart: always

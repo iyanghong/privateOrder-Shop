@@ -85,16 +85,7 @@ public class OrdersServiceImpl implements OrdersService {
         if (ordersPage.getRecords().isEmpty()) {
             return ordersDetailOutputPage;
         }
-        List<String> ids = ordersPage.getRecords().stream().map(Orders::getId).collect(Collectors.toList());
-        List<OrderProductDetailVO> orderProductList = orderProductService.selectDetailListByOrderIds(ids);
-
-        ordersDetailOutputPage.setRecords(ordersPage.getRecords().stream().map(orders -> {
-            OrdersDetailVO ordersDetailOutput = new OrdersDetailVO();
-            BeanUtil.copyProperties(orders, ordersDetailOutput);
-            ordersDetailOutput.setOrderProductList(orderProductList.stream().filter(orderProduct -> orderProduct.getOrderId().equals(ordersDetailOutput.getId())).collect(Collectors.toList()));
-            return ordersDetailOutput;
-        }).collect(Collectors.toList()));
-
+        ordersDetailOutputPage.setRecords(resolveDetail(ordersPage.getRecords()));
         return ordersDetailOutputPage;
     }
 
@@ -130,8 +121,27 @@ public class OrdersServiceImpl implements OrdersService {
      * @return List<Orders> 订单列表
      */
     @Override
-    public List<Orders> selectListByUserId(String userId) {
-        return ordersMapper.selectList(new QueryWrapper<Orders>().eq("user_id", userId).orderByAsc("id"));
+    public List<OrdersDetailVO> selectListByUserId(String userId,Integer status) {
+        QueryWrapper<Orders> queryWrapper = new QueryWrapper<>();
+        if (StringUtils.isNotBlank(userId)) {
+            queryWrapper.eq("user_id", userId);
+        }
+        if (status != null) {
+            queryWrapper.eq("status", status);
+        }
+        List<Orders> orders = ordersMapper.selectList(queryWrapper);
+        return resolveDetail(orders);
+    }
+
+    private List<OrdersDetailVO> resolveDetail(List<Orders> orderList) {
+        List<String> ids = orderList.stream().map(Orders::getId).collect(Collectors.toList());
+        List<OrderProductDetailVO> orderProductList = orderProductService.selectDetailListByOrderIds(ids);
+        return orderList.stream().map(orders -> {
+            OrdersDetailVO ordersDetailOutput = new OrdersDetailVO();
+            BeanUtil.copyProperties(orders, ordersDetailOutput);
+            ordersDetailOutput.setOrderProductList(orderProductList.stream().filter(orderProduct -> orderProduct.getOrderId().equals(ordersDetailOutput.getId())).collect(Collectors.toList()));
+            return ordersDetailOutput;
+        }).collect(Collectors.toList());
     }
 
     /**

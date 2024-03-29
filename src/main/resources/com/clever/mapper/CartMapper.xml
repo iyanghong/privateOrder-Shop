@@ -11,7 +11,7 @@
                p.stock         as productStock,
                p.STATUS        as productStatus,
                p.specification as productParam,
-               p.img_url       as productParamImage
+               p.img_url       as productImage
         FROM cart c
                  LEFT JOIN product p ON c.product_id = p.id
         where c.user_id = #{userId}
@@ -27,7 +27,7 @@
         p.stock as productStock,
         p.STATUS as productStatus,
         p.specification as productParam,
-        p.img_url as productParamImage
+        p.img_url as productImage
         FROM
         cart c LEFT JOIN product p ON c.product_id = p.id
         where c.id in(
@@ -46,7 +46,7 @@
             p.stock as productStock,
             p.STATUS as productStatus,
             p.specification as productParam,
-            p.img_url as productParamImage
+            p.img_url as productImage
         FROM
             cart c LEFT JOIN product p ON c.product_id = p.id
         where 1 = 1

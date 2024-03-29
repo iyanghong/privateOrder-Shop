@@ -56,15 +56,13 @@ public class OrdersController {
     /**
      * 我的订单(分页查询订单列表)
      *
-     * @param pageNumber 页码
-     * @param pageSize   每页记录数
-     * @param status     订单状态:0-未支付,1-已支付,2-已发货,3-已收货,4-已取消,5-已退款
+     * @param status 订单状态:0-未支付,1-已支付,2-已发货,3-已收货,4-已取消,5-已退款
      * @return 当前页数据
      */
-    @GetMapping("/my/{pageNumber}/{pageSize}")
-    @Auth(value = "clever-shopping.orders.page", name = "订单分页", description = "订单分页接口")
-    public Result<Page<OrdersDetailVO>> selectPage(@PathVariable("pageNumber") Integer pageNumber, @PathVariable("pageSize") Integer pageSize, Integer status) {
-        return new Result<>(ordersService.selectPage(pageNumber, pageSize, SpringUtil.getOnlineUser().getId(), status), "分页数据查询成功");
+    @GetMapping("/my")
+    @Auth(value = "clever-shopping.orders.my", name = "我的订单", description = "我的订单接口")
+    public Result<List<OrdersDetailVO>> selectMy(Integer status) {
+        return new Result<>(ordersService.selectListByUserId(SpringUtil.getOnlineUser().getId(), status), "数据查询成功");
     }
 
     /**
@@ -75,8 +73,8 @@ public class OrdersController {
      */
     @GetMapping("/listByUserId/{userId}")
     @Auth(value = "clever-shopping.orders.listByUserId", name = "根据用户id获取订单列表", description = "根据用户id获取订单列表接口")
-    public Result<List<Orders>> selectListByUserId(@PathVariable("userId") String userId) {
-        return new Result<>(ordersService.selectListByUserId(userId), "查询成功");
+    public Result<List<OrdersDetailVO>> selectListByUserId(@PathVariable("userId") String userId,Integer status) {
+        return new Result<>(ordersService.selectListByUserId(userId,status), "查询成功");
     }
 
     /**
@@ -116,6 +114,7 @@ public class OrdersController {
         ordersService.pay(orderId, SpringUtil.getOnlineUser());
         return Result.ofSuccess("支付成功");
     }
+
     /**
      * 取消订单
      *

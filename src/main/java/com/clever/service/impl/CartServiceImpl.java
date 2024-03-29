@@ -42,7 +42,8 @@ public class CartServiceImpl implements CartService {
      */
     @Override
     public Page<CartProductDetailVO> selectPage(Integer pageNumber, Integer pageSize, String userId) {
-        return cartMapper.selectListPage(new Page<CartProductDetailVO>(pageNumber, pageSize),userId);
+        Page<CartProductDetailVO> page = new Page<CartProductDetailVO>(pageNumber, pageSize);
+        return cartMapper.selectListPage(page,userId);
     }
 
     /**
@@ -63,8 +64,8 @@ public class CartServiceImpl implements CartService {
      * @return List<Cart> 购物车列表
      */
     @Override
-    public List<Cart> selectListByUserId(String userId) {
-        return cartMapper.selectList(new QueryWrapper<Cart>().eq("user_id", userId).orderByAsc("id"));
+    public List<CartProductDetailVO> selectListByUserId(String userId) {
+        return cartMapper.selectCartProductDetailByUserId(userId);
     }
 
     /**

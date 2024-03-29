@@ -40,7 +40,7 @@ public interface CartService {
      * @param userId 用户id
      * @return List<Cart> 购物车列表
      */
-    List<Cart> selectListByUserId(String userId);
+    List<CartProductDetailVO> selectListByUserId(String userId);
 
     /**
      * 根据商品id获取列表

@@ -54,14 +54,13 @@ public class CartController {
     /**
      * 我的购物车(分页查询购物车列表)
      *
-     * @param pageNumber 页码
-     * @param pageSize   每页记录数
+
      * @return 当前页数据
      */
-    @GetMapping("/my/{pageNumber}/{pageSize}")
+    @GetMapping("/my")
     @Auth(value = "clever-shopping.cart.page", name = "购物车分页", description = "购物车分页接口")
-    public Result<Page<CartProductDetailVO>> my(@PathVariable("pageNumber") Integer pageNumber, @PathVariable("pageSize") Integer pageSize) {
-        return new Result<>(cartService.selectPage(pageNumber, pageSize, SpringUtil.getOnlineUser().getId()), "分页数据查询成功");
+    public Result<List<CartProductDetailVO>> my() {
+        return new Result<>(cartService.selectListByUserId(SpringUtil.getOnlineUser().getId()), "分页数据查询成功");
     }
 
     /**
@@ -72,7 +71,7 @@ public class CartController {
      */
     @GetMapping("/listByUserId/{userId}")
     @Auth(value = "clever-shopping.cart.listByUserId", name = "根据用户id获取购物车列表", description = "根据用户id获取购物车列表接口")
-    public Result<List<Cart>> selectListByUserId(@PathVariable("userId") String userId) {
+    public Result<List<CartProductDetailVO>> selectListByUserId(@PathVariable("userId") String userId) {
         return new Result<>(cartService.selectListByUserId(userId), "查询成功");
     }
 

@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.clever.bean.shopping.OrderProduct;
 import com.clever.bean.shopping.projo.output.OrderProductDetailVO;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 订单商品服务接口

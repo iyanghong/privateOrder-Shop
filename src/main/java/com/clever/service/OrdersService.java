@@ -42,7 +42,7 @@ public interface OrdersService {
      * @param userId 用户id
      * @return List<Orders> 订单列表
      */
-    List<Orders> selectListByUserId(String userId);
+    List<OrdersDetailVO> selectListByUserId(String userId,Integer status);
 
     /**
      * 新建订单

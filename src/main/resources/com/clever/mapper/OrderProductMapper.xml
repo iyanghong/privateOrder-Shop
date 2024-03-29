@@ -12,7 +12,7 @@
             p.stock AS productStock,
             p.status AS productStatus,
             p.specification AS productParam,
-            p.img_url AS productParamImage
+            p.img_url AS productImage
         FROM
             order_product o
                 LEFT JOIN product p ON o.product_id = p.id
