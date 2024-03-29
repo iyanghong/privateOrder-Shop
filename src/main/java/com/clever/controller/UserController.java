@@ -2,6 +2,7 @@ package com.clever.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.clever.bean.shopping.projo.input.UserRegisterInput;
+import com.clever.bean.shopping.projo.output.UserSearchVO;
 import com.clever.util.SpringUtil;
 import com.clever.annotation.Auth;
 import com.clever.annotation.AuthGroup;
@@ -55,6 +56,11 @@ public class UserController {
     @PostMapping("/register")
     public Result<User> register(@Validated UserRegisterInput userRegisterInput) {
         return new Result<>(userService.register(userRegisterInput), "注册成功");
+    }
+
+    @GetMapping("/search")
+    public Result<List<UserSearchVO>> search(@NotBlank(message = "请输入搜索关键字") String keyword){
+        return new Result<>(userService.search(keyword,SpringUtil.getOnlineUser()),"查询成功") ;
     }
 
     /**

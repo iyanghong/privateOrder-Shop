@@ -56,8 +56,17 @@ public class ProductController {
      */
     @GetMapping("/listByCategoryId/{categoryId}")
     @Auth(value = "clever-shopping.product.listByCategoryId", name = "根据商品分类id获取商品列表", description = "根据商品分类id获取商品列表接口")
-    public Result<List<Product>> selectListByCategoryId(@PathVariable("categoryId") String categoryId) {
-        return new Result<>(productService.selectListByCategoryId(categoryId), "查询成功");
+    public Result<List<Product>> selectListByCategoryId(@PathVariable("categoryId") String categoryId,String name,String status,Integer ifHot) {
+        return new Result<>(productService.selectListByCategoryId(categoryId,name,status,ifHot), "查询成功");
+    }
+
+    /**
+     * 查询热门商品
+     * @return
+     */
+    @GetMapping("/selectHotList")
+    public Result<List<Product>> selectHotList() {
+        return new Result<>(productService.selectHotList(), "查询成功");
     }
 
     /**

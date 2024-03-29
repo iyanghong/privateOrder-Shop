@@ -41,7 +41,8 @@ public interface ProductService {
      * @param categoryId 商品分类id
      * @return List<Product> 商品列表
      */
-    List<Product> selectListByCategoryId(String categoryId);
+    List<Product> selectListByCategoryId(String categoryId,String name,String status,Integer ifHot);
+    List<Product> selectHotList();
 
     /**
      * 根据创建者id获取列表

@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.clever.bean.shopping.User;
 import com.clever.bean.shopping.projo.input.UserRegisterInput;
+import com.clever.bean.shopping.projo.output.UserSearchVO;
 
 /**
  * 用户服务接口
@@ -124,6 +125,7 @@ public interface UserService {
      */
     OnlineUser login(String account, String password);
 
+    List<UserSearchVO> search(String keyword, OnlineUser onlineUser);
     /**
      * 登录退出
      *
