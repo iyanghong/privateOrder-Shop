@@ -3,6 +3,7 @@ package com.clever.bean.shopping.projo.output;
 import com.clever.bean.shopping.OrderProduct;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * @Author xixi
@@ -38,6 +39,18 @@ public class OrderProductDetailVO extends OrderProduct {
      * 商品规格
      */
     private String productParam;
+    /**
+     * 商品创建时间
+     */
+    private Date productCreateTime;
+
+    public Date getProductCreateTime() {
+        return productCreateTime;
+    }
+
+    public void setProductCreateTime(Date productCreateTime) {
+        this.productCreateTime = productCreateTime;
+    }
 
     public String getProductName() {
         return productName;

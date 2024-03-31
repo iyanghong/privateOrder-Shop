@@ -4,6 +4,7 @@ import com.clever.bean.shopping.Cart;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * 购物车商品详情
@@ -41,6 +42,18 @@ public class CartProductDetailVO extends Cart implements Serializable {
      * 商品规格
      */
     private String productParam;
+    /**
+     * 商品创建时间
+     */
+    private Date productCreateTime;
+
+    public Date getProductCreateTime() {
+        return productCreateTime;
+    }
+
+    public void setProductCreateTime(Date productCreateTime) {
+        this.productCreateTime = productCreateTime;
+    }
 
     public String getProductName() {
         return productName;

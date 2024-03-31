@@ -11,7 +11,8 @@
                p.stock         as productStock,
                p.STATUS        as productStatus,
                p.specification as productParam,
-               p.img_url       as productImage
+               p.img_url       as productImage,
+               p.created_at AS productCreateTime
         FROM cart c
                  LEFT JOIN product p ON c.product_id = p.id
         where c.user_id = #{userId}
@@ -27,7 +28,8 @@
         p.stock as productStock,
         p.STATUS as productStatus,
         p.specification as productParam,
-        p.img_url as productImage
+        p.img_url as productImage,
+        p.created_at AS productCreateTime
         FROM
         cart c LEFT JOIN product p ON c.product_id = p.id
         where c.id in(
@@ -39,16 +41,17 @@
     
     <select id="selectListPage" resultType="com.clever.bean.shopping.projo.output.CartProductDetailVO">
         SELECT
-            c.*,
-            p.NAME as productName,
-            p.description productDescription,
-            p.price as productPrice,
-            p.stock as productStock,
-            p.STATUS as productStatus,
-            p.specification as productParam,
-            p.img_url as productImage
+        c.*,
+        p.NAME as productName,
+        p.description productDescription,
+        p.price as productPrice,
+        p.stock as productStock,
+        p.STATUS as productStatus,
+        p.specification as productParam,
+        p.img_url as productImage,
+        p.created_at AS productCreateTime
         FROM
-            cart c LEFT JOIN product p ON c.product_id = p.id
+        cart c LEFT JOIN product p ON c.product_id = p.id
         where 1 = 1
         <if test="userId != null and userId != ''">
             and c.user_id=#{userId}

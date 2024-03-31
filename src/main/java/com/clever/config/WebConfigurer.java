@@ -78,6 +78,12 @@ public class WebConfigurer implements WebMvcConfigurer {
         registry.addInterceptor(new DefaultHandlerInterceptor()).addPathPatterns("/**").excludePathPatterns(
                 "/user/login",
                 "/user/register",
+                "/productCategory/tree",
+                "/product/page/**",
+                "/product/getById/**",
+                "/product/listByCategoryId/**",
+                "/product/listByCreator/**",
+                "/product/selectHotList",
                 "/file/resource/**/**"
         );
     }

@@ -75,8 +75,24 @@ public class ProductServiceImpl implements ProductService {
      * @return List<Product> 商品列表
      */
     @Override
-    public List<Product> selectListByCategoryId(String categoryId) {
-        return productMapper.selectList(new QueryWrapper<Product>().eq("category_id", categoryId).orderByAsc("id"));
+    public List<Product> selectListByCategoryId(String categoryId, String name, String status, Integer ifHot) {
+        QueryWrapper<Product> queryWrapper = new QueryWrapper<Product>().eq("category_id", categoryId);
+        if (StringUtils.isNotBlank(name)) {
+            queryWrapper.like("name", name);
+        }
+        if (StringUtils.isNotBlank(status)) {
+            queryWrapper.eq("status", status);
+        }
+        if (ifHot != null) {
+            queryWrapper.eq("if_hot", ifHot);
+        }
+        queryWrapper.orderByAsc("id");
+        return productMapper.selectList(queryWrapper);
+    }
+
+    @Override
+    public List<Product> selectHotList() {
+        return productMapper.selectList(new QueryWrapper<Product>().eq("if_hot", 1).eq("status", 1).orderByAsc("id"));
     }
 
     /**

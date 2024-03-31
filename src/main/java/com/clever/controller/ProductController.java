@@ -56,8 +56,17 @@ public class ProductController {
      */
     @GetMapping("/listByCategoryId/{categoryId}")
     @Auth(value = "clever-shopping.product.listByCategoryId", name = "根据商品分类id获取商品列表", description = "根据商品分类id获取商品列表接口")
-    public Result<List<Product>> selectListByCategoryId(@PathVariable("categoryId") String categoryId) {
-        return new Result<>(productService.selectListByCategoryId(categoryId), "查询成功");
+    public Result<List<Product>> selectListByCategoryId(@PathVariable("categoryId") String categoryId,String name,String status,Integer ifHot) {
+        return new Result<>(productService.selectListByCategoryId(categoryId,name,status,ifHot), "查询成功");
+    }
+
+    /**
+     * 查询热门商品
+     * @return
+     */
+    @GetMapping("/selectHotList")
+    public Result<List<Product>> selectHotList() {
+        return new Result<>(productService.selectHotList(), "查询成功");
     }
 
     /**
@@ -81,6 +90,18 @@ public class ProductController {
     @GetMapping("/{id}")
     @Auth(value = "clever-system.product.selectById", name = "根据商品id获取商品信息", description = "根据商品id获取商品信息接口")
     public Result<Product> selectById(@PathVariable("id") String id) {
+        return new Result<>(productService.selectById(id), "查询成功");
+    }
+
+    /**
+     * 根据商品id获取商品信息
+     *
+     * @param id 商品id
+     * @return 商品信息
+     */
+    @GetMapping("/getById/{id}")
+    @Auth(value = "clever-system.product.selectById", name = "根据商品id获取商品信息", description = "根据商品id获取商品信息接口")
+    public Result<Product> getById(@PathVariable("id") String id) {
         return new Result<>(productService.selectById(id), "查询成功");
     }
 

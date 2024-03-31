@@ -45,6 +45,10 @@ public class Product implements Serializable {
      */
     private String imgUrl;
     /**
+     * 是否热门：0-否，1-是
+     */
+    private Integer if_hot;
+    /**
      * 商品规格
      */
     private String specification;
@@ -52,6 +56,9 @@ public class Product implements Serializable {
      * 商品库存
      */
     private Integer stock;
+
+
+
     /**
      * 商品状态:0-下架,1-上架
      */
@@ -206,5 +213,13 @@ public class Product implements Serializable {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Integer getIf_hot() {
+        return if_hot;
+    }
+
+    public void setIf_hot(Integer if_hot) {
+        this.if_hot = if_hot;
     }
 }

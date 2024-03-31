@@ -1,12 +1,16 @@
 package com.clever.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.clever.bean.model.OnlineUser;
 import com.clever.bean.shopping.projo.input.UserRegisterInput;
+import com.clever.bean.shopping.projo.output.FriendDetailVO;
+import com.clever.bean.shopping.projo.output.UserSearchVO;
 import com.clever.constant.CacheConstant;
 import com.clever.exception.BaseException;
 import com.clever.exception.ConstantException;
+import com.clever.service.FriendService;
 import com.clever.util.JwtUtil;
 import com.clever.util.RegularUtil;
 import com.clever.util.SpringUtil;
@@ -19,6 +23,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import com.clever.mapper.UserMapper;
 import com.clever.bean.shopping.User;
@@ -40,6 +45,9 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     private UserMapper userMapper;
+
+    @Resource
+    private FriendService friendService;
 
     /**
      * 分页查询用户列表
@@ -266,6 +274,24 @@ public class UserServiceImpl implements UserService {
         userMapper.updateById(updateUser);
         log.info("用户登录, 用户登录成功: account={}, ip={}", account, ip);
         return onlineUser;
+    }
+
+    @Override
+    public List<UserSearchVO> search(String keyword, OnlineUser onlineUser) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("username", keyword);
+        queryWrapper.or().eq("nickname", keyword);
+        queryWrapper.or().eq("phone", keyword);
+        queryWrapper.or().eq("email", keyword);
+        List<String> friendIds = friendService.selectFriendDetailListByUserId(onlineUser.getId()).stream().map(FriendDetailVO::getFriendId).collect(Collectors.toList());
+
+
+        return userMapper.selectList(queryWrapper).stream().map(user -> {
+            UserSearchVO userSearchVO = new UserSearchVO();
+            BeanUtil.copyProperties(user, userSearchVO);
+            userSearchVO.setMyFriend(friendIds.contains(user.getId()));
+            return userSearchVO;
+        }).collect(Collectors.toList());
     }
 
     /**

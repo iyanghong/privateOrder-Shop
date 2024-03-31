@@ -2,5 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.clever.mapper.UserMapper">
-
+    <select id="selectFriendSearch"  resultType="com.clever.bean.shopping.projo.output.UserSearchVO">
+        SELECT
+            u.*,
+            IF
+            ( ( SELECT count( 1 ) FROM friend f WHERE f.friend_id = u.id and f.user_id = #{userId} ) > 0, 1, 0 ) as isMyFriend
+        FROM
+            user u
+        WHERE u.username like #{keyword}
+    </select>
 </mapper>
