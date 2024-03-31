@@ -17,5 +17,6 @@ import java.util.List;
 @Mapper
 public interface FriendRequestMapper extends BaseMapper<FriendRequest> {
     List<FriendRequestDetailVO> selectFriendRequestDetailListByUserId(String userId);
+    List<FriendRequestDetailVO> selectFriendRequestDetailListByFriendId(String userId);
     FriendRequestDetailVO selectFriendRequestDetail(String id);
 }

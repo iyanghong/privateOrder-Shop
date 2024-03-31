@@ -97,7 +97,7 @@ public class FriendRequestServiceImpl implements FriendRequestService {
     }
 
     public List<FriendRequestDetailVO> selectFriendRequestDetailListByUserId(String userId) {
-        return friendRequestMapper.selectFriendRequestDetailListByUserId(userId);
+        return friendRequestMapper.selectFriendRequestDetailListByFriendId(userId);
     }
     /**
      * 查询好友申请详情
