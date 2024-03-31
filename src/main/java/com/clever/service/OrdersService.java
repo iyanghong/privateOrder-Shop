@@ -55,9 +55,10 @@ public interface OrdersService {
     /**
      * 订单支付
      * @param oderId 订单号
+     * @param type 支付方式：0-在线支付，1-余额支付
      * @param onlineUser 当前登录用户
      */
-    void pay(String oderId, OnlineUser onlineUser);
+    void pay(String oderId,Integer type, OnlineUser onlineUser);
     /**
      * 修改订单
      *

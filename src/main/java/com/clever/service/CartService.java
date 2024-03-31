@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.clever.bean.shopping.Cart;
 import com.clever.bean.shopping.projo.output.CartProductDetailVO;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 购物车服务接口

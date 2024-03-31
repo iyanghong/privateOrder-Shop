@@ -33,6 +33,6 @@ public interface CartMapper extends BaseMapper<Cart> {
      * @param ids 购物车id列表
      * @return List<CartProductDetailOutput>
      */
-    List<CartProductDetailVO> selectCartProductDetailByCartIds(List<String> ids);
+    List<CartProductDetailVO> selectCartProductDetailByCartIds(@Param("ids") List<String> ids);
     Page<CartProductDetailVO> selectListPage(Page<CartProductDetailVO> page,@Param("userId") String userId);
 }

@@ -121,7 +121,7 @@ public class OrdersServiceImpl implements OrdersService {
      * @return List<Orders> 订单列表
      */
     @Override
-    public List<OrdersDetailVO> selectListByUserId(String userId,Integer status) {
+    public List<OrdersDetailVO> selectListByUserId(String userId, Integer status) {
         QueryWrapper<Orders> queryWrapper = new QueryWrapper<>();
         if (StringUtils.isNotBlank(userId)) {
             queryWrapper.eq("user_id", userId);
@@ -164,6 +164,10 @@ public class OrdersServiceImpl implements OrdersService {
             throw new BaseException(ConstantException.DATA_NOT_EXIST.format("购物车"));
         }
 
+        if (cartProductDetailOutputs.stream().anyMatch(cartProductDetailVO -> cartProductDetailVO.getProductStatus() == null)) {
+            throw new BaseException(ConstantException.DATA_NOT_EXIST.format("商品"));
+        }
+
         List<CartProductDetailVO> lackStockList = cartProductDetailOutputs.stream().filter(cartProductDetailVO -> cartProductDetailVO.getProductStock() < cartProductDetailVO.getQuantity()).collect(Collectors.toList());
         if (!lackStockList.isEmpty()) {
             log.info("订单, 库存不足: userId={}, lackStockList={}", onlineUser.getId(), lackStockList.get(0).getProductName());
@@ -202,10 +206,11 @@ public class OrdersServiceImpl implements OrdersService {
      * 订单支付
      *
      * @param oderId     订单号
+     * @param type       支付方式：0-在线支付，1-余额支付
      * @param onlineUser 当前登录用户
      */
     @Override
-    public void pay(String oderId, OnlineUser onlineUser) {
+    public void pay(String oderId, Integer type, OnlineUser onlineUser) {
         Orders orders = ordersMapper.selectById(oderId);
         if (orders == null) {
             throw new BaseException(ConstantException.DATA_NOT_EXIST.format("订单"));
@@ -213,13 +218,16 @@ public class OrdersServiceImpl implements OrdersService {
         if (orders.getStatus() != 0) {
             throw new BaseException(ConstantException.ORDER_STATUS_ERROR);
         }
-        User currentUserData = userService.selectById(onlineUser.getId());
-        BigDecimal userBalance = currentUserData.getMoney();
-        if (userBalance.compareTo(orders.getTotalPrice()) < 0) {
-            log.info("订单, 支付余额不足: userId={}, userBalance={}, totalPrice={}", onlineUser.getId(), userBalance, orders.getTotalPrice());
-            throw new BaseException(ConstantException.INSUFFICIENT_BALANCE);
+        if (type == 1) {
+            // 余额支付
+            User currentUserData = userService.selectById(onlineUser.getId());
+            BigDecimal userBalance = currentUserData.getMoney();
+            if (userBalance.compareTo(orders.getTotalPrice()) < 0) {
+                log.info("订单, 支付余额不足: userId={}, userBalance={}, totalPrice={}", onlineUser.getId(), userBalance, orders.getTotalPrice());
+                throw new BaseException(ConstantException.INSUFFICIENT_BALANCE);
+            }
+            userService.deduction(orders.getTotalPrice(), onlineUser.getId());
         }
-        userService.deduction(orders.getTotalPrice(), onlineUser.getId());
         orders.setStatus(1);
         ordersMapper.updateById(orders);
     }

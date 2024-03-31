@@ -73,8 +73,8 @@ public class OrdersController {
      */
     @GetMapping("/listByUserId/{userId}")
     @Auth(value = "clever-shopping.orders.listByUserId", name = "根据用户id获取订单列表", description = "根据用户id获取订单列表接口")
-    public Result<List<OrdersDetailVO>> selectListByUserId(@PathVariable("userId") String userId,Integer status) {
-        return new Result<>(ordersService.selectListByUserId(userId,status), "查询成功");
+    public Result<List<OrdersDetailVO>> selectListByUserId(@PathVariable("userId") String userId, Integer status) {
+        return new Result<>(ordersService.selectListByUserId(userId, status), "查询成功");
     }
 
     /**
@@ -107,11 +107,16 @@ public class OrdersController {
      * 订单支付
      *
      * @param orderId 订单id
+     * @param type    支付方式：0-在线支付，1-余额支付
      * @return String
      */
     @PostMapping("/pay/{orderId}")
-    public Result<String> pay(@NotBlank(message = "请选择要支付的订单") @PathVariable("orderId") String orderId) {
-        ordersService.pay(orderId, SpringUtil.getOnlineUser());
+    public Result<String> pay(@NotBlank(message = "请选择要支付的订单") @PathVariable("orderId") String orderId, Integer type) {
+        if (type == null) {
+            type = 0;
+        }
+
+        ordersService.pay(orderId, type, SpringUtil.getOnlineUser());
         return Result.ofSuccess("支付成功");
     }
 

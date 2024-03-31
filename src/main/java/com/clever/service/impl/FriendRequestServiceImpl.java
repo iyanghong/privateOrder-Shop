@@ -52,8 +52,8 @@ public class FriendRequestServiceImpl implements FriendRequestService {
             return;
         }
         FriendRequest newFriendRequest = new FriendRequest();
-        newFriendRequest.setFriendId(userId);
-        newFriendRequest.setUserId(onlineUser.getId());
+        newFriendRequest.setFriendId(onlineUser.getId());
+        newFriendRequest.setUserId(userId);
         newFriendRequest.setStatus(0);
         newFriendRequest.setMessage(message);
         friendRequestMapper.insert(newFriendRequest);
